@@ -73,7 +73,7 @@ public class FXMLDocumentController {
     }
     
     public void goToPlayWithFriend(ActionEvent event) throws IOException {
-        root = new PlayWithFriendBase(stage);
+        root = new PlayWithFriend(stage);
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
