@@ -113,13 +113,14 @@ public class UsersListBase extends AnchorPane {
         getChildren().add(text);
         getChildren().add(requestBtn);
         getChildren().add(serverCheck);
-
-        
-//        User user = DAL.selectPalyer();
-//        System.out.println("username: " + client.getUsername() + " Score: " + client.getScore());
-        
-
+ 
     }
+       
+    public static void nameList(User user){
+        player.setText(user.getUsername());
+        score.setText(String.valueOf(user.getScore()));
+       
+       };
     
     public void selectPlayer(javafx.event.ActionEvent actionEvent){
         
@@ -143,7 +144,7 @@ public class UsersListBase extends AnchorPane {
         System.out.println("clients retrieved: " + users.toString());
         
         for(int i = 0; i < usersNum; i++){
-            listView.getItems().add(users.get(i).getUsername());
+            listView.getItems().add(users.get(i).getUsername() +  "\t \t" + "SCORE =" +users.get(i).getScore());
             System.out.println("username: " + users.get(i).getUsername());
         }
         

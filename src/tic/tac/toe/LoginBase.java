@@ -264,6 +264,8 @@ public class LoginBase extends BorderPane {
                       
                       System.out.println("logging in");
                       controller.goToGameMode(actionEvent);
+                      GameModeBase.name(user);
+                      UsersListBase.nameList(user);
 //                      DAL.selectPalyer(user);
                       
                   } else {

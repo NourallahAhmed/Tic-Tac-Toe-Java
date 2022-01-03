@@ -12,77 +12,40 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.ResultSet;
+import org.apache.derby.jdbc.ClientDriver;
 import java.sql.Statement;
+//import tic.tac.toe.User;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.derby.jdbc.ClientDriver;
+
 
 public class DAL {
 
+    User checker = new User();
     static Connection con;
-    
-    public static void initDatabase(){
-    
+
+    public static void initDatabase() {
+
         try {
-            
+
             DriverManager.registerDriver(new ClientDriver());
-            con = DriverManager.getConnection("jdbc:derby://localhost:1527/AppDatabase", "root", "root");
-            
+            con = DriverManager.getConnection("jdbc:derby://localhost:1527/Tic Tac Toe DB", "root", "root");
+
         } catch (SQLException ex) {
             Logger.getLogger(DAL.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-    }
 
-    public static User selectPalyer(User user) {
-        
-        User currentUser = new User();
-        
-            try {     
-                
-                initDatabase();
-                
-                Statement stmt = con.createStatement();
-                String queryString = new String("Select * from Client where username ?");
-                
-                PreparedStatement pst = con.prepareStatement(queryString);
-                pst.setString(1, user.getUsername());
-                ResultSet rs = stmt.executeQuery(queryString);
-                
-                currentUser.setUsername(rs.getString(1));
-                currentUser.setScore(rs.getInt(3));
-                
-                stmt.close();
-                con.close();
-
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            
-            return currentUser;
     }
     
-    // retrieve all users
-    public static List<User> retrieveAll() {
-        
-        List<User> users = new ArrayList<>();
-       
-        try {     
+    public static void selectPalyer(User client) //Client.getUsername()
+    {
+        try {
 
             initDatabase();
 
-            Statement stmt = con.createStatement() ; 
-            String queryString = new String("Select * from Client");
-
+            Statement stmt = con.createStatement();
+            String queryString = new String("Select * from ROOT.PALYERSDATA where USERNAME = '" + client.getUsername() + "'");
             ResultSet rs = stmt.executeQuery(queryString);
-
-            while(rs.next()){
-
-                User user = new User();
-                user.setUsername(rs.getString(1));
-                user.setScore(rs.getInt(3));
-                users.add(user);
-            }
 
             stmt.close();
             con.close();
@@ -90,10 +53,103 @@ public class DAL {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-
-        return users;
     }
+
+    public static void InsertPlayer(User client) {
+        try {
+
+            initDatabase();
+            Statement stmt = con.createStatement();
+
+            System.out.println(client.getPassword());
+            System.out.println(client.getUsername());
+            System.out.println(client.getScore());
+
+            String queryString = new String("INSERT INTO ROOT.PALYERSDATA (USERNAME, PASSWORD, SCORE) VALUES ('" + client.getUsername() + "','" + client.getPassword() + "', 0)");
+            stmt.executeUpdate(queryString);
+
+            stmt.close();
+            con.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DAL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public static void UpdatePlayer(User client) //mainly for updating the scores after each game
+    {
+        try {
+
+            initDatabase();
+            PreparedStatement ps = con.prepareStatement("Update into ROOT.PALYERSDATA  Values(?,?,?)");
+            ps.setString(1, client.getUsername());
+            ps.setString(2, client.getPassword());
+            ps.setInt(3, client.getScore());
+            ps.executeUpdate();
+
+            ps.close();
+            con.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DAL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    /*public static ResultSet selectAll() throws SQLException {
+
+        initDatabase();
+
+        Statement stmt;
+        stmt = con.createStatement();
+        String queryString = new String("Select * from ROOT.PALYERSDATA");
+        ResultSet r = stmt.executeQuery(queryString);
+        while (r.next()) {
+            System.out.println(r);
+        }
+
+        stmt.close();
+        con.close();
+        return r;
+    }*/
     
+public static List<User> retrieveAll ()
+    {
+       List<User> clients = new ArrayList<>();
+       
+            try {     
+                
+                initDatabase();
+                
+                Statement stmt = con.createStatement() ; 
+                String queryString = new String("Select * from ROOT.PALYERSDATA");
+                
+                ResultSet rs = stmt.executeQuery(queryString);
+                
+                int counter = 0;
+                
+                while(rs.next()){
+                    System.out.println("retrieveAll " + rs.getString(1));
+                    User client = new User();
+                    client.setUsername(rs.getString(1));
+                    client.setScore(rs.getInt(3));
+                    //clients.add(counter, client);
+                    clients.add(client);
+                    counter++;
+                }
+                
+                stmt.close();
+                con.close();
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+     
+        return clients;
+    }
+
+   
     public static User checkUserExits(String username){
         
         User user = new User();
@@ -103,7 +159,7 @@ public class DAL {
             initDatabase();
             
             Statement stmt = con.createStatement() ;
-            String queryString = new String("Select * From Client Where username = ?"); 
+            String queryString = new String("Select * From ROOT.PALYERSDATA Where username = ?"); 
             
             PreparedStatement pst = con.prepareStatement(queryString);
             pst.setString(1, username);
@@ -125,58 +181,5 @@ public class DAL {
         
         return user;
     }
-    
-    //adding new user from regersiter
-    public static User insertPlayer(User user) {
-        
-        User insertedClient = user;
-        
-        try {
-            
-            initDatabase();
 
-            Statement stmt = con.createStatement();
-
-            System.out.println(user.getPassword());
-            System.out.println(user.getUsername());
-            System.out.println(user.getScore());
-
-            String queryString = new String("INSERT INTO Client (USERNAME, PASSWORD, SCORES) VALUES ('"+ user.getUsername()+"','"+user.getPassword()+ "', 0)");
-            stmt.executeUpdate(queryString);
-
-            stmt.close();
-            con.close();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(DAL.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        return insertedClient;
-    }
-    
-    public static void increasePlayerScore (User user) {
-        
-        try {
-            
-            initDatabase();
-            
-            int updateScore = user.getScore();
-            PreparedStatement ps = con.prepareStatement("Update into Client Values(?,?,?)");
-            
-            ps.setString(1, user.getUsername());
-            ps.setString(2, user.getPassword());
-            ps.setInt(3, updateScore++);
-            
-            ps.executeUpdate();
-
-            ps.close();
-            con.close();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(DAL.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-    }
-    
 }
-

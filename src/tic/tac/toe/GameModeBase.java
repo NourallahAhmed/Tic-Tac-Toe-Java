@@ -27,13 +27,20 @@ public class GameModeBase extends BorderPane {
     protected final Button playOnlineBtn;
     protected final Button playWithFriendBtn;
     protected final FlowPane flowPane;
-    protected final Text playerNameText;
+    //protected final Text playerNameText;
+    protected static Text playerNameText;
+
     protected final Label label;
-    protected final Text scoreText;
+    //protected final Text scoreText;
+    protected static Text scoreText;
+
 
     FXMLDocumentController controller=new FXMLDocumentController();
     
-    public GameModeBase(Stage stage) {
+    
+   
+    
+    public GameModeBase(Stage stage ) {
 
         gridPane = new GridPane();
         columnConstraints = new ColumnConstraints();
@@ -144,13 +151,19 @@ public class GameModeBase extends BorderPane {
         flowPane.getChildren().add(playerNameText);
         flowPane.getChildren().add(label);
         flowPane.getChildren().add(scoreText);
-
-//        User user = DAL.selectPalyer();
-//        playerNameText.setText(user.getUsername());
-//        scoreText.setText(String.valueOf(user.getScore()));
+        
+     
 
         
     }
+    
+    
+       public static void name(User user){
+
+//      User user = DAL.selectPalyer();
+        playerNameText.setText(user.getUsername());
+        scoreText.setText(String.valueOf(user.getScore()));};
+
 
     protected void playVsComputer(javafx.event.ActionEvent actionEvent) {
         try {
@@ -172,6 +185,7 @@ public class GameModeBase extends BorderPane {
     protected void playWithFriend(javafx.event.ActionEvent actionEvent) {
         try {
             controller.goToPlayWithFriend(actionEvent);
+        
         } catch (IOException ex) {
             Logger.getLogger(GameModeBase.class.getName()).log(Level.SEVERE, null, ex);
         }
