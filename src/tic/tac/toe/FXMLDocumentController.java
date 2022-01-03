@@ -5,28 +5,79 @@
  */
 package tic.tac.toe;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+import java.io.IOException;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-
-public class FXMLDocumentController implements Initializable {
+public class FXMLDocumentController {
     
-    @FXML
-    private Label label;
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
     
-    @FXML
-    private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        label.setText("Hello World!");
+   
+    public void goToVideo(ActionEvent event) throws IOException{
+        root = new FXMLVideoScreenBase(stage); // add video screen
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
     
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+    public void goToListView(ActionEvent event) throws IOException{
+        root = new UsersListBase(stage); // add video screen
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    
+    
+    public void goToLogin(ActionEvent event) throws IOException {
+
+        root = new LoginBase(stage);
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+
+    }
+
+    public void goToRegister(ActionEvent event) throws IOException {
+
+        root = new RegisterBase(stage);
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    
+    public void goToGameMode(ActionEvent event) throws IOException {
+
+        root = new GameModeBase(stage);
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }  
+        
+    public void goToUsersList(ActionEvent event) throws IOException {
+        root = new UsersListBase(stage);
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    
+    public void goToPlayWithFriend(ActionEvent event) throws IOException {
+        root = new PlayWithFriendBase(stage);
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
     
 }
