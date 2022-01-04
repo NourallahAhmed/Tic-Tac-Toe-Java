@@ -1,11 +1,11 @@
 package tic.tac.toe;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -32,6 +32,8 @@ public  class PlayWithFriend extends AnchorPane {
     protected final Label playerName;
     protected final Button backbtn;
     protected final Button reset;
+
+
     boolean turnX = true;
    // flag lma el l3ba tnthy
     boolean playable = true;
@@ -123,6 +125,8 @@ public  class PlayWithFriend extends AnchorPane {
 
 
 
+
+
         backbtn = new Button();
         playerName = new Label();
         reset = new Button();
@@ -165,6 +169,9 @@ public  class PlayWithFriend extends AnchorPane {
                getChildren().add(backbtn);
                   getChildren().add(reset);
 
+        
+  
+   
     
     }
                 private void checkState(){
@@ -174,7 +181,6 @@ public  class PlayWithFriend extends AnchorPane {
                 palyWinAnimation(combo);
              	playerName.setText("The Winner is " + combo.tiles[0].getValue() + " player.");
                         getChildren().add(playerName);
-
 
                 break;
             }
@@ -243,7 +249,13 @@ public  class PlayWithFriend extends AnchorPane {
 
 
             };
+        
+   
+
+                    
+                }
+
            
-}
+
 
 
