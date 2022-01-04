@@ -28,7 +28,7 @@ public class FXMLDocumentController {
     }
     
     public void goToListView(ActionEvent event) throws IOException{
-        root = new UsersListBase(stage); // add video screen
+        root = new ListViewBase(stage); // add video screen
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
@@ -65,7 +65,7 @@ public class FXMLDocumentController {
     }  
         
     public void goToUsersList(ActionEvent event) throws IOException {
-        root = new UsersListBase(stage);
+        root = new ListViewBase(stage);
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);

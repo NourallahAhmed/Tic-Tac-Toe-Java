@@ -28,11 +28,11 @@ public class GameModeBase extends BorderPane {
     protected final Button playWithFriendBtn;
     protected final FlowPane flowPane;
     //protected final Text playerNameText;
-    protected static Text playerNameText;
+    //protected static Text playerNameText;
 
-    protected final Label label;
+    //protected final Label label;
     //protected final Text scoreText;
-    protected static Text scoreText;
+    //protected static Text scoreText;
 
 
     FXMLDocumentController controller=new FXMLDocumentController();
@@ -52,9 +52,9 @@ public class GameModeBase extends BorderPane {
         playOnlineBtn = new Button();
         playWithFriendBtn = new Button();
         flowPane = new FlowPane();
-        playerNameText = new Text();
-        label = new Label();
-        scoreText = new Text();
+        //playerNameText = new Text();
+        //label = new Label();
+        //scoreText = new Text();
 
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);
@@ -101,7 +101,8 @@ public class GameModeBase extends BorderPane {
         playOnlineBtn.setMnemonicParsing(false);
         playOnlineBtn.setOnAction(this::playOnline);
         playOnlineBtn.setText("Play Online");
-        GridPane.setMargin(playOnlineBtn, new Insets(0.0, 0.0, 10.0, 265.0));
+        playOnlineBtn.setPrefWidth(150.0);
+        GridPane.setMargin(playOnlineBtn, new Insets(0.0, 0.0, 10.0, 250.0));
         playOnlineBtn.setFont(new Font("System Bold", 15.0));
 
         GridPane.setRowIndex(playWithFriendBtn, 1);
@@ -116,7 +117,7 @@ public class GameModeBase extends BorderPane {
         BorderPane.setAlignment(flowPane, javafx.geometry.Pos.CENTER);
         flowPane.setPrefHeight(110.0);
         flowPane.setPrefWidth(600.0);
-
+        /*
         playerNameText.setId("playername");
         playerNameText.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         playerNameText.setStrokeWidth(0.0);
@@ -138,7 +139,7 @@ public class GameModeBase extends BorderPane {
         scoreText.setText("2");
         FlowPane.setMargin(scoreText, new Insets(30.0, 10.0, 10.0, 0.0));
         scoreText.setFont(new Font("System Bold", 15.0));
-        setTop(flowPane);
+        setTop(flowPane);*/
 
         gridPane.getColumnConstraints().add(columnConstraints);
         gridPane.getColumnConstraints().add(columnConstraints0);
@@ -148,29 +149,31 @@ public class GameModeBase extends BorderPane {
         gridPane.getChildren().add(vsComputerBtn);
         gridPane.getChildren().add(playOnlineBtn);
         gridPane.getChildren().add(playWithFriendBtn);
-        flowPane.getChildren().add(playerNameText);
-        flowPane.getChildren().add(label);
-        flowPane.getChildren().add(scoreText);
+       // flowPane.getChildren().add(playerNameText);
+       // flowPane.getChildren().add(label);
+        //flowPane.getChildren().add(scoreText);
         
      
 
         
     }
     
-    
+    /*
        public static void name(User user){
 
 //      User user = DAL.selectPalyer();
         playerNameText.setText(user.getUsername());
         scoreText.setText(String.valueOf(user.getScore()));};
-
+    */
 
     protected void playVsComputer(javafx.event.ActionEvent actionEvent) {
+        /*]
         try {
             controller.goToPlayWithFriend(actionEvent);
         } catch (IOException ex) {
             Logger.getLogger(GameModeBase.class.getName()).log(Level.SEVERE, null, ex);
         }
+        */
     }
 
     protected void playOnline(javafx.event.ActionEvent actionEvent) {

@@ -66,6 +66,7 @@ public  class PlayWithFriend extends AnchorPane {
        }
     }
     
+        
 
     public PlayWithFriend(Stage stage) {
 

@@ -11,6 +11,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import java.util.logging.Logger;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Font;
@@ -43,6 +44,8 @@ public class LoginBase extends BorderPane {
     protected final Pane pane;
     protected final Label usernameNotFound;
     protected final Label wrongPass;
+    protected final Button backbtn;
+
     
     User user = new User();
     FXMLDocumentController controller = new FXMLDocumentController();
@@ -73,6 +76,8 @@ public class LoginBase extends BorderPane {
         pane = new Pane();
         usernameNotFound = new Label();
         wrongPass = new Label();
+        backbtn = new Button();
+
 
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);
@@ -120,6 +125,15 @@ public class LoginBase extends BorderPane {
         loginBtn.setText(" Login ");
         GridPane.setMargin(loginBtn, new Insets(-150.0, 0.0, 0.0, 260.0));
         loginBtn.setFont(new Font("System Bold", 16.0));
+        
+        GridPane.setColumnIndex(backbtn, 5);
+        backbtn.setLayoutX(50.0);
+        backbtn.setLayoutY(20.0);
+        backbtn.setMnemonicParsing(false);
+        backbtn.setOnAction(this::BackAction);
+        backbtn.setPrefHeight(25.0);
+        backbtn.setPrefWidth(100.0);
+        backbtn.setText("HOME");
 
         GridPane.setColumnIndex(createAccountBtn, 1);
         GridPane.setRowIndex(createAccountBtn, 2);
@@ -246,6 +260,8 @@ public class LoginBase extends BorderPane {
         gridPane0.getChildren().add(passwordLogin);
         gridPane0.getChildren().add(text0);
         gridPane0.getChildren().add(text1);
+        gridPane0. getChildren().add(backbtn);
+
         pane.getChildren().add(usernameNotFound);
         pane.getChildren().add(wrongPass);
         gridPane0.getChildren().add(pane);
@@ -263,9 +279,9 @@ public class LoginBase extends BorderPane {
                   if(passwordLogin.getText().equals(user.getPassword())){
                       
                       System.out.println("logging in");
-                      controller.goToGameMode(actionEvent);
-                      GameModeBase.name(user);
-                      UsersListBase.nameList(user);
+                      controller.goToListView(actionEvent);
+                      //GameModeBase.name(user);
+                      ListViewBase.nameList(user);
 //                      DAL.selectPalyer(user);
                       
                   } else {
@@ -299,5 +315,16 @@ public class LoginBase extends BorderPane {
             Logger.getLogger(LoginBase.class.getName()).log(Level.SEVERE, null, ex);
         }
     };
+    
+    protected  void BackAction(javafx.event.ActionEvent actionEvent) 
+            
+    { 
+        try {
+            FXMLDocumentController controller=new FXMLDocumentController();
+            controller.goToGameMode(actionEvent);
+        } catch (IOException ex) {
+            Logger.getLogger(ListViewBase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            };
 
 }

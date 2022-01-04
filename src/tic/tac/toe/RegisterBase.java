@@ -267,11 +267,11 @@ public  class RegisterBase extends BorderPane {
                     
                 } else {
                     
-                    controller.goToGameMode(actionEvent);
+                    controller.goToListView(actionEvent);
                     client.setUsername((usernamereg.getText()));
                     client.setPassword((passwordreg.getText())); //replace
                     client.setScore(0);
-                    GameModeBase.name(client);
+                    //GameModeBase.name(client);
                     UsersListBase.nameList(client);
                     //System.out.println("INSERT INTO Client (USERNAME, PASSWORD, SCORES) VALUES ('"+ client.getUsername()+"','"+client.getPassword()+ "', 0)");
                     DAL.InsertPlayer(client);
