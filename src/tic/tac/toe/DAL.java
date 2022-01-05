@@ -48,9 +48,13 @@ public class DAL {
 
             Statement stmt = con.createStatement();
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             String queryString = new String("Select * from Client where USERNAME = '" + client.getUsername() + "'");
 =======
             String queryString = new String("Select * from Client where USERNAME = '" + user.getUsername() + "'");
+>>>>>>> Stashed changes
+=======
+            String queryString = new String("Select * from Client where USERNAME = '" + client.getUsername() + "'");
 >>>>>>> Stashed changes
             ResultSet rs = stmt.executeQuery(queryString);
 
@@ -73,9 +77,13 @@ public class DAL {
             System.out.println(user.getScore());
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             String queryString = new String("INSERT INTO Client (USERNAME, PASSWORD, SCORE) VALUES ('" + client.getUsername() + "','" + client.getPassword() + "', 0)");
 =======
             String queryString = new String("INSERT INTO Client (USERNAME, PASSWORD, SCORE) VALUES ('" + user.getUsername() + "','" + user.getPassword() + "', 0)");
+>>>>>>> Stashed changes
+=======
+            String queryString = new String("INSERT INTO Client (USERNAME, PASSWORD, SCORE) VALUES ('" + client.getUsername() + "','" + client.getPassword() + "', 0)");
 >>>>>>> Stashed changes
             stmt.executeUpdate(queryString);
 
