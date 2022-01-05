@@ -203,6 +203,14 @@ public  class ListViewBase extends AnchorPane {
                   System.out.println("ENTER THE IP ADDRESS");
                   IP_not_exist.setVisible(false);
               }
+        
+        /////////<<<<<<TEST>>>>>>>////////////
+        try {
+            FXMLDocumentController controller=new FXMLDocumentController();
+            controller.goToPlayOnline(actionEvent);
+        } catch (IOException ex) {
+            Logger.getLogger(ListViewBase.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     };
 
