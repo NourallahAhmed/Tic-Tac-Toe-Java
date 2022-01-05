@@ -14,7 +14,10 @@ import java.util.logging.Logger;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import org.apache.derby.jdbc.ClientDriver;
+<<<<<<< Updated upstream
 //import tic.tac.toe.User;
+=======
+>>>>>>> Stashed changes
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,14 +40,18 @@ public class DAL {
 
     }
     
-    public static void selectPalyer(User client) //Client.getUsername()
+    public static void selectPalyer(User user) //Client.getUsername()
     {
         try {
 
             initDatabase();
 
             Statement stmt = con.createStatement();
+<<<<<<< Updated upstream
             String queryString = new String("Select * from Client where USERNAME = '" + client.getUsername() + "'");
+=======
+            String queryString = new String("Select * from Client where USERNAME = '" + user.getUsername() + "'");
+>>>>>>> Stashed changes
             ResultSet rs = stmt.executeQuery(queryString);
 
             stmt.close();
@@ -55,17 +62,21 @@ public class DAL {
         }
     }
 
-    public static void InsertPlayer(User client) {
+    public static void InsertPlayer(User user) {
         try {
 
             initDatabase();
             Statement stmt = con.createStatement();
 
-            System.out.println(client.getPassword());
-            System.out.println(client.getUsername());
-            System.out.println(client.getScore());
+            System.out.println(user.getPassword());
+            System.out.println(user.getUsername());
+            System.out.println(user.getScore());
 
+<<<<<<< Updated upstream
             String queryString = new String("INSERT INTO Client (USERNAME, PASSWORD, SCORE) VALUES ('" + client.getUsername() + "','" + client.getPassword() + "', 0)");
+=======
+            String queryString = new String("INSERT INTO Client (USERNAME, PASSWORD, SCORE) VALUES ('" + user.getUsername() + "','" + user.getPassword() + "', 0)");
+>>>>>>> Stashed changes
             stmt.executeUpdate(queryString);
 
             stmt.close();
@@ -127,16 +138,16 @@ public static List<User> retrieveAll ()
                 
                 ResultSet rs = stmt.executeQuery(queryString);
                 
-                int counter = 0;
+//                int counter = 0;
                 
                 while(rs.next()){
                     System.out.println("retrieveAll " + rs.getString(1));
-                    User client = new User();
-                    client.setUsername(rs.getString(1));
-                    client.setScore(rs.getInt(3));
+                    User user = new User();
+                    user.setUsername(rs.getString(1));
+                    user.setScore(rs.getInt(3));
                     //clients.add(counter, client);
-                    clients.add(client);
-                    counter++;
+                    clients.add(user);
+//                    counter++;
                 }
                 
                 stmt.close();
