@@ -272,9 +272,9 @@ public  class RegisterBase extends BorderPane {
                     client.setPassword((passwordreg.getText())); //replace
                     client.setScore(0);
                     //GameModeBase.name(client);
-                    UsersListBase.nameList(client);
+                    ListViewBase.nameList(client);
                     //System.out.println("INSERT INTO Client (USERNAME, PASSWORD, SCORES) VALUES ('"+ client.getUsername()+"','"+client.getPassword()+ "', 0)");
-                    DAL.InsertPlayer(client);
+                    DAL.insertPlayer(client);
                 }
                 
             } else {

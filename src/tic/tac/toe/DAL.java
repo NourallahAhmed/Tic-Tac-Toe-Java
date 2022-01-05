@@ -12,11 +12,11 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.ResultSet;
-import org.apache.derby.jdbc.ClientDriver;
 import java.sql.Statement;
 //import tic.tac.toe.User;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.derby.jdbc.ClientDriver;
 
 
 public class DAL {
@@ -44,7 +44,7 @@ public class DAL {
             initDatabase();
 
             Statement stmt = con.createStatement();
-            String queryString = new String("Select * from ROOT.PALYERSDATA where USERNAME = '" + client.getUsername() + "'");
+            String queryString = new String("Select * from PALYERSDATA where USERNAME = '" + client.getUsername() + "'");
             ResultSet rs = stmt.executeQuery(queryString);
 
             stmt.close();
@@ -55,7 +55,7 @@ public class DAL {
         }
     }
 
-    public static void InsertPlayer(User client) {
+    public static void insertPlayer(User client) {
         try {
 
             initDatabase();
@@ -65,7 +65,7 @@ public class DAL {
             System.out.println(client.getUsername());
             System.out.println(client.getScore());
 
-            String queryString = new String("INSERT INTO ROOT.PALYERSDATA (USERNAME, PASSWORD, SCORE) VALUES ('" + client.getUsername() + "','" + client.getPassword() + "', 0)");
+            String queryString = new String("INSERT INTO PALYERSDATA (USERNAME, PASSWORD, SCORE) VALUES ('" + client.getUsername() + "','" + client.getPassword() + "', 0)");
             stmt.executeUpdate(queryString);
 
             stmt.close();
@@ -77,12 +77,12 @@ public class DAL {
 
     }
 
-    public static void UpdatePlayer(User client) //mainly for updating the scores after each game
+    public static void updatePlayer(User client) //mainly for updating the scores after each game
     {
         try {
 
             initDatabase();
-            PreparedStatement ps = con.prepareStatement("Update into ROOT.PALYERSDATA  Values(?,?,?)");
+            PreparedStatement ps = con.prepareStatement("Update into PALYERSDATA Values(?,?,?)");
             ps.setString(1, client.getUsername());
             ps.setString(2, client.getPassword());
             ps.setInt(3, client.getScore());
@@ -123,7 +123,7 @@ public static List<User> retrieveAll ()
                 initDatabase();
                 
                 Statement stmt = con.createStatement() ; 
-                String queryString = new String("Select * from ROOT.PALYERSDATA");
+                String queryString = new String("Select * from PALYERSDATA");
                 
                 ResultSet rs = stmt.executeQuery(queryString);
                 
@@ -158,8 +158,8 @@ public static List<User> retrieveAll ()
             
             initDatabase();
             
-            Statement stmt = con.createStatement() ;
-            String queryString = new String("Select * From ROOT.PALYERSDATA Where username = ?"); 
+            Statement stmt = con.createStatement();
+            String queryString = new String("Select * From PALYERSDATA Where username = ?"); 
             
             PreparedStatement pst = con.prepareStatement(queryString);
             pst.setString(1, username);
