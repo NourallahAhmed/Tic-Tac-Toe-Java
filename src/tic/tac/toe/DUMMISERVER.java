@@ -22,10 +22,7 @@ import java.util.logging.Logger;
 
 
 public class DUMMISERVER {
-    
-    
-    
-    
+
     ServerSocket MyServer;
     public DUMMISERVER()
     {
@@ -52,14 +49,14 @@ class ChatHandler extends Thread
         DataInputStream dis;
         PrintStream ps;
         
-        static Vector<ChatHandler> clientVector = new Vector <ChatHandler> ();
+        //static Vector<ChatHandler> clientVector = new Vector <ChatHandler> ();
         
         public ChatHandler(Socket waiter)
         {
             try {
                 dis =new DataInputStream (waiter.getInputStream());
                 ps = new PrintStream(waiter.getOutputStream());
-                ChatHandler.clientVector.add(this);
+               // ChatHandler.clientVector.add(this);
                 start();
             } catch (IOException ex) {
                 Logger.getLogger(ChatHandler.class.getName()).log(Level.SEVERE, null, ex);
@@ -72,11 +69,12 @@ class ChatHandler extends Thread
                 String str;
                 try {
                     str = dis.readLine();
-                    SendMessageToAll(str); 
+                    System.out.println(str);
+                    //SendMessageToAll(str); 
                 }catch(SocketException e){
                     try {
                         dis.close();
-                        clientVector.remove(this);
+                     //   clientVector.remove(this);
                     } catch (IOException ex) {
                         Logger.getLogger(ChatHandler.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -89,12 +87,13 @@ class ChatHandler extends Thread
               
             }
         }
-        void SendMessageToAll(String msg)
+      
+        /*void SendMessageToAll(String msg)
         {
             for (ChatHandler ch : clientVector)
             {   ch.ps.println(msg); }
                 
-        }
+        }*/
     
     
 }

@@ -31,9 +31,12 @@ import java.util.logging.Logger;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -105,8 +108,7 @@ public  class ClientNetwork extends AnchorPane  {
             draw =  new DRAWX();
         } 
         else  draw = new DRAWO();
-      
-       
+        
         try {
             Server= new Socket("127.0.0.1",5005); //ip
             ps= new PrintStream( Server.getOutputStream());
@@ -116,11 +118,47 @@ public  class ClientNetwork extends AnchorPane  {
         catch (IOException ex) {
             Logger.getLogger(ClientNetwork.class.getName()).log(Level.SEVERE, null, ex);}
         
+        //OutPutStream
+        /*setOnMouseClicked(new javafx.event.EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                ps.println(draw.DRAWXO());}});*/
+            
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true)
+                {
+                    try {
+                        String msg = dis.readLine();
+                        //TextArea.appendText(msg+"\n");
+                    } 
+                    catch(SocketException e)
+                    {
+                        try {
+                            dis.close();
+                        } catch (IOException ex) {
+                            Logger.getLogger(ClientNetwork.class.getName()).log(Level.SEVERE, null, ex);
+                        }}
+                    catch (IOException ex) {
+                        Logger.getLogger(ClientNetwork.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+              
+                }
+            }
+        }).start(); 
       
-        
-        //output stream
-        setOnMouseClicked(event ->{ps.println(draw);});
-        
+       /*
+        try {
+            Server= new Socket("127.0.0.1",5005); //ip
+            ps= new PrintStream( Server.getOutputStream());
+            dis= new DataInputStream (Server.getInputStream());
+            
+        } 
+        catch (IOException ex) {
+            Logger.getLogger(ClientNetwork.class.getName()).log(Level.SEVERE, null, ex);}
+       
+            
         //input stream
         new Thread(new Runnable() {
                         @Override
@@ -143,7 +181,7 @@ public  class ClientNetwork extends AnchorPane  {
 
                             }
                         }
-                    }).start();
+                    }).start();*/
 
 }
 
@@ -159,16 +197,16 @@ public  class ClientNetwork extends AnchorPane  {
             text.setFont(Font.font(72)); //carry the x or the o 
             getChildren().add(border);
             getChildren().add(text);
-            /*setOnMouseClicked(event -> {
+            setOnMouseClicked(event -> {
                 if (!playable) {
                     return;
                 }
                 else{
                     draw.DRAWXO(); //what ever the symbol;
                     ps.println(draw);
-                }*/
-            };
-        
+                }
+            });
+        }
 
         public double getCenterX() {
             return getTranslateX() + 100;}
