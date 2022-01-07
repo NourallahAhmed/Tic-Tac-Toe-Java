@@ -9,6 +9,8 @@
 add the record button 
 add the vedio screen navigation 
 creating draw interface and 2 classes implemented (DRAWO // DRAWX)
+take the ip from the list ui 
+
 */
 package tic.tac.toe;
 
@@ -57,6 +59,8 @@ public  class ClientNetwork extends AnchorPane  {
     protected final Label playerName;
     protected final Button backbtn;
     protected final Button record;
+    
+    protected  static String ip;
     boolean playable = true;  //flage  to end the game 
     
     private List<Combo> combos = new ArrayList<>();
@@ -66,9 +70,16 @@ public  class ClientNetwork extends AnchorPane  {
     DataInputStream dis;
     PrintStream ps;
     DRAW draw;
+    
+    public static void setIP(String str)
+    {
+        ip=str;
+        //return str;
+        System.out.println("IP in networking is"+ip);
+    }
   
     
- public ClientNetwork(Stage stage) {
+    public ClientNetwork(Stage stage) {
         backbtn = new Button();
         playerName = new Label();
         record = new Button();
@@ -102,12 +113,21 @@ public  class ClientNetwork extends AnchorPane  {
         getChildren().add(backbtn);
         getChildren().add(record);
         
-        String choose ="X";
+          
+        String choose ="O";
         // choose the result from the alert 
+        
         if (choose == "X"){
             draw =  new DRAWX();
+            //System.out.println(draw.DRAWXO());
         } 
-        else  draw = new DRAWO();
+        else  {
+            draw = new DRAWO();
+            //System.out.println(draw.DRAWXO());
+        }
+        
+      
+        
         
         try {
             Server= new Socket("127.0.0.1",5005); //ip
@@ -130,6 +150,12 @@ public  class ClientNetwork extends AnchorPane  {
                 while (true)
                 {
                     try {
+                        
+                        /*
+                        String str=draw.DRAWXO();
+                        str= dis.readLine();
+                        Tile t = new Tile(draw);
+                        */
                         String msg = dis.readLine();
                         //TextArea.appendText(msg+"\n");
                     } 
@@ -148,41 +174,6 @@ public  class ClientNetwork extends AnchorPane  {
             }
         }).start(); 
       
-       /*
-        try {
-            Server= new Socket("127.0.0.1",5005); //ip
-            ps= new PrintStream( Server.getOutputStream());
-            dis= new DataInputStream (Server.getInputStream());
-            
-        } 
-        catch (IOException ex) {
-            Logger.getLogger(ClientNetwork.class.getName()).log(Level.SEVERE, null, ex);}
-       
-            
-        //input stream
-        new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            while (true) {
-                                try {
-                                    String str=draw.DRAWXO();
-                                    str= dis.readLine();
-                                    Tile t = new Tile(draw);
-                                    checkState();
-                                } catch (SocketException e) {
-                                    try {
-                                        dis.close();
-                                    } catch (IOException ex) {
-                                        Logger.getLogger(ClientNetwork.class.getName()).log(Level.SEVERE, null, ex);
-                                    }
-                                } catch (IOException ex) {
-                                    Logger.getLogger(ClientNetwork.class.getName()).log(Level.SEVERE, null, ex);
-                                }
-
-                            }
-                        }
-                    }).start();*/
-
 }
 
  // el class da lkol square fe elboard w ((( hwa el by7ot el X w O lma el user udos 3la el square )))
@@ -203,7 +194,9 @@ public  class ClientNetwork extends AnchorPane  {
                 }
                 else{
                     draw.DRAWXO(); //what ever the symbol;
-                    ps.println(draw);
+                    System.out.println(draw.DRAWXO());
+
+                    ps.println(draw.DRAWXO());
                 }
             });
         }
@@ -244,12 +237,11 @@ private void checkState()
                 playable = false;
                 palyWinAnimation(combo);
                 playerName.setText("The Winner is " + combo.tiles[0].getValue() + " player.");
-                getChildren().add(playerName);
-                
-              
-                
+                getChildren().add(playerName);  
                 break;}}
     }
+
+
 public void drawboard(){
     pane = new Pane();
 
@@ -298,6 +290,8 @@ private void palyWinAnimation(Combo combo) {
         
         // call vedio screen
         // missed in which player will appear
+        
+        
         /*
         try {
         FXMLDocumentController controller = new FXMLDocumentController();

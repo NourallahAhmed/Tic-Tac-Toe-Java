@@ -175,35 +175,37 @@ public  class ListViewBase extends AnchorPane {
     protected void enterIP(javafx.event.ActionEvent actionEvent)
     {
         String ip = new String(IpAddress.getText());
-        if(ip != null){
+        
+        ClientNetwork.setIP(IpAddress.getText());
+        System.out.println("the IP "+IpAddress.getText());
+        
+        if(IpAddress.getText().isEmpty()){
+            
+            System.out.println("ENTER THE IP ADDRESS");
+            IP_not_exist.setVisible(false);
+        }
+            else {
             
             if(!retrieved){
-           
-            List<User> users = new ArrayList<>();
 
-            users.addAll(DAL.retrieveAll());
-            int usersNum = users.size();
+                List<User> users = new ArrayList<>();
 
-            System.out.println("clients retrieved: " + users.toString());
+                users.addAll(DAL.retrieveAll());
+                int usersNum = users.size();
 
-            for(int i = 0; i < usersNum; i++){
-                ListView.getItems().add(users.get(i).getUsername() +  "\t \t" + "SCORE =" +users.get(i).getScore());
-                System.out.println("username: " + users.get(i).getUsername());
-            }
+                System.out.println("clients retrieved: " + users.toString());
 
-            retrieved = true; }
-
-             else {
+                for(int i = 0; i < usersNum; i++){
+                    ListView.getItems().add(users.get(i).getUsername());
+                    System.out.println("username: " + users.get(i).getUsername());}
+                
+                retrieved = true; }
+            
+            else {
                 ListView.getItems().clear();
-                retrieved = false;
-            }
+                retrieved = false;}
         }
-        else {
-                  
-                  System.out.println("ENTER THE IP ADDRESS");
-                  IP_not_exist.setVisible(false);
-              }
-        
+
         /////////<<<<<<TEST>>>>>>>////////////
         try {
             FXMLDocumentController controller=new FXMLDocumentController();
