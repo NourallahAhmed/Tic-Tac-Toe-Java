@@ -10,7 +10,11 @@ add the record button
 add the vedio screen navigation 
 creating draw interface and 2 classes implemented (DRAWO // DRAWX)
 take the ip from the list ui 
+show the x and o 
+*/
 
+/*
+DATABASE update function 
 */
 package tic.tac.toe;
 
@@ -114,23 +118,9 @@ public  class ClientNetwork extends AnchorPane  {
         getChildren().add(record);
         
           
-        String choose ="O";
-        // choose the result from the alert 
-        
-        if (choose == "X"){
-            draw =  new DRAWX();
-            //System.out.println(draw.DRAWXO());
-        } 
-        else  {
-            draw = new DRAWO();
-            //System.out.println(draw.DRAWXO());
-        }
-        
-      
-        
         
         try {
-            Server= new Socket("127.0.0.1",5005); //ip
+            Server= new Socket(ip,5005); //ip
             ps= new PrintStream( Server.getOutputStream());
             dis= new DataInputStream (Server.getInputStream());
             
@@ -188,18 +178,37 @@ public  class ClientNetwork extends AnchorPane  {
             text.setFont(Font.font(72)); //carry the x or the o 
             getChildren().add(border);
             getChildren().add(text);
-            setOnMouseClicked(event -> {
-                if (!playable) {
-                    return;
-                }
-                else{
-                    draw.DRAWXO(); //what ever the symbol;
-                    System.out.println(draw.DRAWXO());
+            setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    if (!playable) {
+                        return;
+                    }
+                    else{
+                   
+                        String choose = "X";
+                        // choose the result from the alert
+                        if (choose == "X") {
+                            DRAW draw =new DRAWX(); 
+                            //draw.DRAWXO();
+                            text.setText(draw.DRAWXO());
+                            checkState();
 
-                    ps.println(draw.DRAWXO());
+                            //System.out.println(draw.DRAWXO());
+                            
+                            
+                        } else {
+                            DRAW draw =new DRAWO(); 
+                            //draw.DRAWXO();
+                            text.setText(draw.DRAWXO());
+                            checkState();
+
+                            //System.out.println(draw.DRAWXO());
+                            ps.println(draw.DRAWXO());
+                        }
+                    }}});
                 }
-            });
-        }
+           
 
         public double getCenterX() {
             return getTranslateX() + 100;}
