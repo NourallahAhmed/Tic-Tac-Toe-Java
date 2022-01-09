@@ -26,84 +26,92 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public  class PlayWithFriend extends AnchorPane {
+public class PlayWithFriend extends AnchorPane {
 
     protected Pane pane ;
     protected final Label playerName;
     protected final Button backbtn;
     protected final Button reset;
 
-
     boolean turnX = true;
-   // flag lma el l3ba tnthy
+    // flag lma el l3ba tnthy
     boolean playable = true;
     private List<Combo> combos = new ArrayList<>();
     private Tile[][] board = new Tile[3][3];
 
-             // el class da lkol square fe elboard w hwa el by7ot el X w O lma el user udos 3la el square 
-        public class Tile extends StackPane{
-         Text text = new Text();
-
-             public Tile(){
-
-                Rectangle border = new Rectangle(200,200);
-                border.setFill(null);
-                border.setStroke(Color.BLACK);
-                setAlignment(Pos.CENTER);
-                text.setFont(Font.font(72));
-                getChildren().add(border);
-                getChildren().add(text);
+    // el class da lkol square fe elboard w hwa el by7ot el X w O lma el user udos 3la el square 
+    public class Tile extends StackPane{
         
+        Text text = new Text();
 
-                setOnMouseClicked(event ->  {
-                    if (!playable){
-                        return;
-                    }
-                    if(turnX==true){
+        public Tile(){
+
+           Rectangle border = new Rectangle(200,200);
+           border.setFill(null);
+           border.setStroke(Color.BLACK);
+           setAlignment(Pos.CENTER);
+           text.setFont(Font.font(72));
+           getChildren().add(border);
+           getChildren().add(text);
+
+           setOnMouseClicked(event ->  {
+               
+               if (!playable){
+                   return;
+               }
+               
+               if(turnX==true){
                     drawX();
                     checkState();
                     turnX= false;
-                    }
-                    else {
-                        if(turnX==false){
-                            drawO();
-                            checkState();
-                            turnX=true;
-                        }
-                    }              
-                });
-             }  
-            public double getCenterX(){
-                return getTranslateX() + 100;
-            }  
-            public double getCenterY(){
-                return getTranslateY() + 100;
-            } 
-            public String getValue(){
-                return text.getText();
-            }
+               }
+               
+               else {
+                    if(turnX==false){
+                        drawO();
+                        checkState();
+                        turnX=true;
+                   }
+               }              
+           });
+           
+        }  
+        
+       public double getCenterX(){
+           return getTranslateX() + 100;
+       }  
+       
+       public double getCenterY(){
+           return getTranslateY() + 100;
+       } 
+       
+       public String getValue(){
+           return text.getText();
+       }
 
-            private void drawX(){
-                text.setText("X");
-            }
-               private void drawO(){
-                text.setText("O");
-            }
+       private void drawX(){
+           text.setText("X");
+       }
+       
+       private void drawO(){
+           text.setText("O");
+       }
     }
-        // el class da hwa ely by4el el 3 squares swaa2 vertical , horizontal or diagonal whwa el by7dd lw el 3 squares fehom nfs el 7rf wla l2
-        public class Combo{
-             private Tile[] tiles;
-             public Combo(Tile... tiles){
-                 this.tiles = tiles;
-             }
-             public boolean isComplete(){
-                 if(tiles[0].getValue().isEmpty())
-                     return false;
-                return tiles[0].getValue().equals(tiles[1].getValue())
-                     && tiles[0].getValue().equals(tiles[2].getValue());
-                 
-             }
-        }
+        
+    // el class da hwa ely by4el el 3 squares swaa2 vertical , horizontal or diagonal whwa el by7dd lw el 3 squares fehom nfs el 7rf wla l2
+    public class Combo{
+         private Tile[] tiles;
+         public Combo(Tile... tiles){
+             this.tiles = tiles;
+         }
+         public boolean isComplete(){
+             if(tiles[0].getValue().isEmpty())
+                 return false;
+            return tiles[0].getValue().equals(tiles[1].getValue())
+                 && tiles[0].getValue().equals(tiles[2].getValue());
+
+         }
+    }
 
     private void palyWinAnimation(Combo combo){
         Line line = new Line();
@@ -119,13 +127,7 @@ public  class PlayWithFriend extends AnchorPane {
         timeline.play();
     }
     
-  
-
     public PlayWithFriend(Stage stage) {
-
-
-
-
 
         backbtn = new Button();
         playerName = new Label();
@@ -147,7 +149,7 @@ public  class PlayWithFriend extends AnchorPane {
         backbtn.setPrefWidth(65.0);
         backbtn.setText("HOME");
         
-       AnchorPane.setBottomAnchor(reset, 50.0);
+        AnchorPane.setBottomAnchor(reset, 50.0);
         reset.setLayoutX(300.0);
         reset.setLayoutY(700.0);
         reset.setMnemonicParsing(false);
@@ -155,7 +157,6 @@ public  class PlayWithFriend extends AnchorPane {
         reset.setPrefHeight(50.0);
         reset.setPrefWidth(100.0);
         reset.setText("RESET");
-        
 
         playerName.setLayoutX(200.0);
         playerName.setLayoutY(20.0);
@@ -164,17 +165,13 @@ public  class PlayWithFriend extends AnchorPane {
         playerName.setText(" ");
         playerName.setFont(new Font("Bell MT", 30.0));
 	drawboard();
- 
       
-               getChildren().add(backbtn);
-                  getChildren().add(reset);
-
+        getChildren().add(backbtn);
+        getChildren().add(reset);
         
-  
-   
-    
     }
-                private void checkState(){
+    
+    private void checkState(){
         for (Combo combo: combos){
             if(combo.isComplete()){
                 playable = false;
@@ -186,7 +183,9 @@ public  class PlayWithFriend extends AnchorPane {
             }
         }     
     }
-        public void drawboard(){
+                
+    public void drawboard(){
+        
         pane = new Pane();
 
         pane.setLayoutX(43.0);
@@ -194,7 +193,8 @@ public  class PlayWithFriend extends AnchorPane {
         pane.setPrefHeight(400.0);
         pane.setPrefWidth(600.0);
 
-            for(int i=0;i<3;i++){
+        for(int i=0;i<3;i++){
+                
             for (int j=0;j<3;j++){
                 Tile tile = new Tile();
                 tile.setTranslateX(j*200);
@@ -204,58 +204,42 @@ public  class PlayWithFriend extends AnchorPane {
             }
         }
        
-                       getChildren().add(pane);    
+        getChildren().add(pane);    
                        
-             for (int y =0 ; y<3 ; y++){
+        for (int y =0 ; y<3 ; y++){
             combos.add(new Combo(board[0][y], board[1][y], board[2][y]));
         }
-        // vertical
         
+        // vertical
         for (int x =0 ; x<3 ; x++){
             combos.add(new Combo(board[x][0], board[x][1], board[x][2]));
         }
+        
         // diagonal
         combos.add(new Combo(board[0][0], board[1][1], board[2][2]));
         combos.add(new Combo(board[2][0], board[1][1], board[0][2]));
 
+        }
         
-
-
-                    
-                }
-        
-            protected  void BackAction(javafx.event.ActionEvent actionEvent) 
-            
-    { 
+    protected  void BackAction(javafx.event.ActionEvent actionEvent) { 
         try {
             FXMLDocumentController controller=new FXMLDocumentController();
             controller.goToGameMode(actionEvent);
         } catch (IOException ex) {
             Logger.getLogger(ListViewBase.class.getName()).log(Level.SEVERE, null, ex);
         }
-            };
             
-            
+    };
+    
+    protected  void ResetAction(javafx.event.ActionEvent actionEvent) { 
 
-            protected  void ResetAction(javafx.event.ActionEvent actionEvent) 
-            
-    { 
-                    getChildren().removeAll(pane,playerName);
-                    playable = true;
-                    turnX = true;
-                    board = new Tile[3][3];
-                    combos = new ArrayList<>();
-                    drawboard();
+        getChildren().removeAll(pane,playerName);
+        playable = true;
+        turnX = true;
+        board = new Tile[3][3];
+        combos = new ArrayList<>();
+        drawboard();
 
+    };
 
-            };
-        
-   
-
-                    
-                }
-
-           
-
-
-
+}

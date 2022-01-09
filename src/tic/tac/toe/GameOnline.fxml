@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane layoutX="-18.0" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="400.0" prefWidth="612.0">
+         <children>
+            <Line fx:id="HLine1" endX="135.0" layoutX="295.0" layoutY="75.0" startX="-138.0" />
+            <Line fx:id="VLine2" endX="52.0" endY="48.0" layoutX="290.0" layoutY="149.0" startX="52.0" startY="-123.0" />
+            <Line fx:id="HLine2" endX="130.0" layoutX="301.0" layoutY="137.0" startX="-143.0" />
+            <Line fx:id="VLine1" endX="-17.0" endY="79.0" layoutX="266.0" layoutY="118.0" startX="-17.0" startY="-91.0" />
+            <Label fx:id="label6" layoutX="345.0" layoutY="79.0" prefHeight="53.0" prefWidth="86.0" />
+            <Label fx:id="label1" layoutX="158.0" layoutY="27.0" prefHeight="40.0" prefWidth="81.0" />
+            <Label fx:id="label2" layoutX="258.0" layoutY="22.0" prefHeight="44.0" prefWidth="74.0" />
+            <Label fx:id="label3" layoutX="352.0" layoutY="32.0" prefHeight="37.0" prefWidth="73.0" />
+            <Label fx:id="label4" layoutX="157.0" layoutY="82.0" prefHeight="48.0" prefWidth="82.0" />
+            <Label fx:id="label5" layoutX="255.0" layoutY="77.0" prefHeight="54.0" prefWidth="79.0" />
+            <Label fx:id="label7" layoutX="158.0" layoutY="142.0" prefHeight="45.0" prefWidth="84.0" />
+            <Label fx:id="label8" layoutX="256.0" layoutY="141.0" prefHeight="49.0" prefWidth="77.0" />
+            <Label fx:id="label9" layoutX="347.0" layoutY="144.0" prefHeight="45.0" prefWidth="80.0" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

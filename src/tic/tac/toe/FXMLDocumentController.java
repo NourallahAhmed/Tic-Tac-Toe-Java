@@ -79,5 +79,12 @@ public class FXMLDocumentController {
         stage.setScene(scene);
         stage.show();
     }
+    public void goToOnlineGame(ActionEvent event) throws IOException {
+        root = new GameOnlineBase(stage);
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
     
 }

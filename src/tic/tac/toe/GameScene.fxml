@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tic_tac_toe_game.GameSceneController">
+   <bottom>
+      <BorderPane prefHeight="93.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <left>
+            <FlowPane alignment="TOP_CENTER" orientation="VERTICAL" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <BorderPane prefHeight="45.0" prefWidth="200.0">
+                     <center>
+                        <Line endX="463.89715576171875" endY="-25.348709106445312" startX="369.604248046875" startY="-25.348724365234375" BorderPane.alignment="CENTER" />
+                     </center>
+                     <bottom>
+                        <FlowPane alignment="TOP_CENTER" orientation="VERTICAL" prefHeight="61.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <Text fx:id="Player1Text" strokeType="OUTSIDE" strokeWidth="0.0" text="Player 1" textAlignment="CENTER" wrappingWidth="198.134765625" />
+                              <Text fx:id="Score1Text" strokeType="OUTSIDE" strokeWidth="0.0" text="Score" textAlignment="CENTER" wrappingWidth="195.3603515625" />
+                           </children>
+                        </FlowPane>
+                     </bottom>
+                     <top>
+                        <Text fx:id="ONotationText" strokeType="OUTSIDE" strokeWidth="0.0" text="O" BorderPane.alignment="CENTER" />
+                     </top>
+                  </BorderPane>
+               </children>
+            </FlowPane>
+         </left>
+         <right>
+            <FlowPane alignment="TOP_CENTER" orientation="VERTICAL" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <BorderPane prefHeight="45.0" prefWidth="200.0">
+                     <center>
+                        <Line endX="463.89715576171875" endY="-25.348709106445312" startX="369.604248046875" startY="-25.348724365234375" BorderPane.alignment="CENTER" />
+                     </center>
+                     <bottom>
+                        <FlowPane alignment="TOP_CENTER" orientation="VERTICAL" prefHeight="61.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <Text fx:id="Player2Text" strokeType="OUTSIDE" strokeWidth="0.0" text="Player 2" textAlignment="CENTER" wrappingWidth="198.134765625" />
+                              <Text fx:id="Score1Text1" strokeType="OUTSIDE" strokeWidth="0.0" text="Score" textAlignment="CENTER" wrappingWidth="195.3603515625" />
+                           </children>
+                        </FlowPane>
+                     </bottom>
+                     <top>
+                        <Text fx:id="XNotationText" strokeType="OUTSIDE" strokeWidth="0.0" text="X" BorderPane.alignment="CENTER" />
+                     </top>
+                  </BorderPane>
+               </children>
+            </FlowPane>
+         </right>
+      </BorderPane>
+   </bottom>
+   <top>
+      <BorderPane prefHeight="83.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <top>
+            <FlowPane prefHeight="24.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+               <children>
+                  <MenuButton fx:id="menuList" mnemonicParsing="false" prefHeight="21.0" prefWidth="92.0" text="Menu">
+                    <items>
+                      <MenuItem fx:id="homeButton" mnemonicParsing="false" text="Home" />
+                      <MenuItem fx:id="resetButton" mnemonicParsing="false" text="Reset" />
+                    </items>
+                  </MenuButton>
+               </children>
+            </FlowPane>
+         </top>
+         <center>
+            <Text fx:id="gameText" strokeType="OUTSIDE" strokeWidth="0.0" text="Game" textAlignment="CENTER" wrappingWidth="98.8447265625" BorderPane.alignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+         </center>
+      </BorderPane>
+   </top>
+   <center>
+      <AnchorPane prefHeight="239.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <Line fx:id="HLine1" endX="135.0" layoutX="295.0" layoutY="75.0" startX="-138.0" />
+            <Line fx:id="VLine2" endX="52.0" endY="48.0" layoutX="290.0" layoutY="149.0" startX="52.0" startY="-123.0" />
+            <Line fx:id="HLine2" endX="130.0" layoutX="301.0" layoutY="137.0" startX="-143.0" />
+            <Line fx:id="VLine1" endX="-17.0" endY="79.0" layoutX="266.0" layoutY="118.0" startX="-17.0" startY="-91.0" />
+            <Label fx:id="label6" layoutX="345.0" layoutY="79.0" prefHeight="53.0" prefWidth="86.0" />
+            <Label fx:id="label1" layoutX="158.0" layoutY="27.0" prefHeight="40.0" prefWidth="81.0" />
+            <Label fx:id="label2" layoutX="258.0" layoutY="22.0" prefHeight="44.0" prefWidth="74.0" />
+            <Label fx:id="label3" layoutX="352.0" layoutY="32.0" prefHeight="37.0" prefWidth="73.0" />
+            <Label fx:id="label4" layoutX="157.0" layoutY="82.0" prefHeight="48.0" prefWidth="82.0" />
+            <Label fx:id="label5" layoutX="255.0" layoutY="77.0" prefHeight="54.0" prefWidth="79.0" />
+            <Label fx:id="label7" layoutX="158.0" layoutY="142.0" prefHeight="45.0" prefWidth="84.0" />
+            <Label fx:id="label8" layoutX="256.0" layoutY="141.0" prefHeight="49.0" prefWidth="77.0" />
+            <Label fx:id="label9" layoutX="347.0" layoutY="144.0" prefHeight="45.0" prefWidth="80.0" />
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
+

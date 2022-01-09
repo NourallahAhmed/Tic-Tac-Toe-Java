@@ -21,7 +21,7 @@ import org.apache.derby.jdbc.ClientDriver;
 
 public class DAL {
 
-    User checker = new User();
+//    User checker = new User();s
     static Connection con;
 
     public static void initDatabase() {
@@ -96,23 +96,6 @@ public class DAL {
         }
 
     }
-
-    /*public static ResultSet selectAll() throws SQLException {
-
-        initDatabase();
-
-        Statement stmt;
-        stmt = con.createStatement();
-        String queryString = new String("Select * from ROOT.PALYERSDATA");
-        ResultSet r = stmt.executeQuery(queryString);
-        while (r.next()) {
-            System.out.println(r);
-        }
-
-        stmt.close();
-        con.close();
-        return r;
-    }*/
     
 public static List<User> retrieveAll ()
     {

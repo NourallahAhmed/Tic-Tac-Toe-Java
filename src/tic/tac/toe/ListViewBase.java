@@ -172,26 +172,28 @@ public  class ListViewBase extends AnchorPane {
        
        };
 
-    protected void enterIP(javafx.event.ActionEvent actionEvent)
-    {
+    protected void enterIP(javafx.event.ActionEvent actionEvent){
+        
         String ip = new String(IpAddress.getText());
+        
         if(ip != null){
             
             if(!retrieved){
            
-            List<User> users = new ArrayList<>();
+                List<User> users = new ArrayList<>();
 
-            users.addAll(DAL.retrieveAll());
-            int usersNum = users.size();
+                users.addAll(DAL.retrieveAll());
+                int usersNum = users.size();
 
-            System.out.println("clients retrieved: " + users.toString());
+                System.out.println("clients retrieved: " + users.toString());
 
-            for(int i = 0; i < usersNum; i++){
-                ListView.getItems().add(users.get(i).getUsername() +  "\t \t" + "SCORE =" +users.get(i).getScore());
-                System.out.println("username: " + users.get(i).getUsername());
+                for(int i = 0; i < usersNum; i++){
+                    ListView.getItems().add(users.get(i).getUsername() +  "\t \t" + "SCORE =" +users.get(i).getScore());
+                    System.out.println("username: " + users.get(i).getUsername());
+                }
+
+                retrieved = true; 
             }
-
-            retrieved = true; }
 
              else {
                 ListView.getItems().clear();
@@ -200,22 +202,29 @@ public  class ListViewBase extends AnchorPane {
         }
         else {
                   
-                  System.out.println("ENTER THE IP ADDRESS");
-                  IP_not_exist.setVisible(false);
-              }
+            System.out.println("ENTER THE IP ADDRESS");
+            IP_not_exist.setVisible(false);
+        }
 
     };
 
+    // temporary
     protected  void sendRequest(javafx.event.ActionEvent actionEvent)
     {
+        try {
+            
+            FXMLDocumentController controller = new FXMLDocumentController();
+            controller.goToOnlineGame(actionEvent);
+        } catch (IOException ex) {
+            Logger.getLogger(ListViewBase.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
-        
-        User name = new User();
-        Object n = ListView.getSelectionModel().getSelectedItem();
-
-        //name.setUsername(n.toString());
-
-        System.out.println(ListView.getSelectionModel().getSelectedItem());
+//        User name = new User();
+//        Object n = ListView.getSelectionModel().getSelectedItem();
+//
+//        //name.setUsername(n.toString());
+//
+//        System.out.println(ListView.getSelectionModel().getSelectedItem());
 
     };
 
@@ -229,6 +238,7 @@ public  class ListViewBase extends AnchorPane {
         } catch (IOException ex) {
             Logger.getLogger(ListViewBase.class.getName()).log(Level.SEVERE, null, ex);
         }
-            };
+            
+    };
 
 }
