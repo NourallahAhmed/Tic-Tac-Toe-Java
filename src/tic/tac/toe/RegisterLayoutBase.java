@@ -1,11 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tic.tac.toe;
 
+import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.geometry.Insets;
@@ -19,12 +17,11 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-public  class RegisterBase extends BorderPane {
-    
-    User client = new User();
-    FXMLDocumentController controller = new FXMLDocumentController();
-    
+public  class RegisterLayoutBase extends BorderPane {
+
     protected final GridPane gridPane;
     protected final ColumnConstraints columnConstraints;
     protected final ColumnConstraints columnConstraints0;
@@ -38,19 +35,24 @@ public  class RegisterBase extends BorderPane {
     protected final PasswordField passwordreg;
     protected final Text text0;
     protected final Text text1;
-    protected final Text validUsernameAndPass;
-    protected final Text usernameUsed;
-    protected final GridPane gridPane0;
+    protected final TextField IPreg;
+    protected final Text text2;
+    protected final GridPane IPfeild;
     protected final ColumnConstraints columnConstraints2;
     protected final ColumnConstraints columnConstraints3;
     protected final RowConstraints rowConstraints3;
     protected final RowConstraints rowConstraints4;
     protected final RowConstraints rowConstraints5;
-    protected final Button registerBtn;
-    protected final Button backToLogin;
-        
-    public RegisterBase(Stage mystage) {
-        
+    protected final Button button;
+
+    
+    Socket Server;
+    DataInputStream dis;
+    PrintStream ps;
+
+    FXMLDocumentController controller = new FXMLDocumentController();
+    public RegisterLayoutBase(Stage stage) {
+
         gridPane = new GridPane();
         columnConstraints = new ColumnConstraints();
         columnConstraints0 = new ColumnConstraints();
@@ -64,16 +66,15 @@ public  class RegisterBase extends BorderPane {
         passwordreg = new PasswordField();
         text0 = new Text();
         text1 = new Text();
-        validUsernameAndPass = new Text();
-        usernameUsed = new Text();
-        gridPane0 = new GridPane();
+        IPreg = new TextField();
+        text2 = new Text();
+        IPfeild = new GridPane();
         columnConstraints2 = new ColumnConstraints();
         columnConstraints3 = new ColumnConstraints();
         rowConstraints3 = new RowConstraints();
         rowConstraints4 = new RowConstraints();
         rowConstraints5 = new RowConstraints();
-        registerBtn = new Button();
-        backToLogin = new Button();
+        button = new Button();
 
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);
@@ -159,30 +160,27 @@ public  class RegisterBase extends BorderPane {
         text1.setFont(new Font(16.0));
         GridPane.setMargin(text1, new Insets(70.0, 0.0, 0.0, 60.0));
 
-        GridPane.setColumnIndex(validUsernameAndPass, 1);
-        GridPane.setRowIndex(validUsernameAndPass, 3);
-        validUsernameAndPass.setFill(javafx.scene.paint.Color.valueOf("#171717"));
-        validUsernameAndPass.setId("validusernameandpass");
-        validUsernameAndPass.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
-        validUsernameAndPass.setStrokeWidth(0.0);
-        validUsernameAndPass.setText("Please enter valid username and password!");
-        validUsernameAndPass.setVisible(false);
-        GridPane.setMargin(validUsernameAndPass, new Insets(25.0, 0.0, 0.0, 0.0));
+        GridPane.setColumnIndex(IPreg, 1);
+        GridPane.setRowIndex(IPreg, 3);
+        IPreg.setId("IPregreg");
+        IPreg.setPrefHeight(39.0);
+        IPreg.setPrefWidth(366.0);
+        IPreg.setPromptText("Enter the IP Address");
+        IPreg.setFont(new Font(15.0));
+        GridPane.setMargin(IPreg, new Insets(70.0, 0.0, 0.0, 0.0));
 
-        GridPane.setColumnIndex(usernameUsed, 1);
-        GridPane.setRowIndex(usernameUsed, 3);
-        usernameUsed.setFill(javafx.scene.paint.Color.valueOf("#171717"));
-        usernameUsed.setId("usernameuse");
-        usernameUsed.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
-        usernameUsed.setStrokeWidth(0.0);
-        usernameUsed.setText("This username already in use!");
-        usernameUsed.setVisible(false);
-        GridPane.setMargin(usernameUsed, new Insets(50.0, 0.0, 0.0, 65.0));
+        GridPane.setRowIndex(text2, 3);
+        text2.setId("IPreg");
+        text2.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
+        text2.setStrokeWidth(0.0);
+        text2.setText("IP Address");
+        text2.setFont(new Font(16.0));
+        GridPane.setMargin(text2, new Insets(70.0, 15.0, 0.0, 60.0));
         setLeft(gridPane);
 
-        BorderPane.setAlignment(gridPane0, javafx.geometry.Pos.CENTER);
-        gridPane0.setPrefHeight(132.0);
-        gridPane0.setPrefWidth(600.0);
+        BorderPane.setAlignment(IPfeild, javafx.geometry.Pos.CENTER);
+        IPfeild.setPrefHeight(132.0);
+        IPfeild.setPrefWidth(600.0);
 
         columnConstraints2.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
         columnConstraints2.setMaxWidth(585.0);
@@ -206,26 +204,16 @@ public  class RegisterBase extends BorderPane {
         rowConstraints5.setPrefHeight(30.0);
         rowConstraints5.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
 
-        GridPane.setRowIndex(registerBtn, 1);
-        registerBtn.setId("registerbtn");
-        registerBtn.setMnemonicParsing(false);
-        registerBtn.setOnAction(this::gameModeAction);
-        registerBtn.setPrefHeight(37.0);
-        registerBtn.setPrefWidth(129.0);
-        registerBtn.setText("Register");
-        registerBtn.setFont(new Font("System Bold", 16.0));
-        GridPane.setMargin(registerBtn, new Insets(-50.0, 0.0, 0.0, 230.0));
-
-        GridPane.setRowIndex(backToLogin, 1);
-        backToLogin.setId("backtologin");
-        backToLogin.setMnemonicParsing(false);
-        backToLogin.setOnAction(this::backToLoginAction);
-        backToLogin.setPrefHeight(37.0);
-        backToLogin.setPrefWidth(129.0);
-        backToLogin.setText("Back to Login");
-        GridPane.setMargin(backToLogin, new Insets(60.0, 30.0, 0.0, 230.0));
-        backToLogin.setFont(new Font("System Bold", 16.0));
-        setBottom(gridPane0);
+        GridPane.setRowIndex(button, 1);
+        button.setId("registerbtn");
+        button.setMnemonicParsing(false);
+        button.setOnAction(this::registeraction);
+        button.setPrefHeight(37.0);
+        button.setPrefWidth(129.0);
+        button.setText("Register");
+        button.setFont(new Font("System Bold", 16.0));
+        GridPane.setMargin(button, new Insets(70.0, 0.0, 0.0, 230.0));
+        setBottom(IPfeild);
 
         gridPane.getColumnConstraints().add(columnConstraints);
         gridPane.getColumnConstraints().add(columnConstraints0);
@@ -239,66 +227,50 @@ public  class RegisterBase extends BorderPane {
         gridPane.getChildren().add(passwordreg);
         gridPane.getChildren().add(text0);
         gridPane.getChildren().add(text1);
-        gridPane.getChildren().add(validUsernameAndPass);
-        gridPane.getChildren().add(usernameUsed);
-        gridPane0.getColumnConstraints().add(columnConstraints2);
-        gridPane0.getColumnConstraints().add(columnConstraints3);
-        gridPane0.getRowConstraints().add(rowConstraints3);
-        gridPane0.getRowConstraints().add(rowConstraints4);
-        gridPane0.getRowConstraints().add(rowConstraints5);
-        gridPane0.getChildren().add(registerBtn);
-        gridPane0.getChildren().add(backToLogin);
+        gridPane.getChildren().add(IPreg);
+        gridPane.getChildren().add(text2);
+        IPfeild.getColumnConstraints().add(columnConstraints2);
+        IPfeild.getColumnConstraints().add(columnConstraints3);
+        IPfeild.getRowConstraints().add(rowConstraints3);
+        IPfeild.getRowConstraints().add(rowConstraints4);
+        IPfeild.getRowConstraints().add(rowConstraints5);
+        IPfeild.getChildren().add(button);
 
     }
 
-    protected void gameModeAction(javafx.event.ActionEvent actionEvent) {
-        
-        try {
-            
-            User clientExist = DAL.checkUserExits(usernamereg.getText());
-            
-            if(!usernamereg.getText().equals("") && passwordreg.getText().length() > 6){
+    protected void registeraction(javafx.event.ActionEvent actionEvent){
+      try {
+          
+          
+               // Server= new Socket("127.0.0.1",5005); //ip
+                Server = new Socket(IPreg.getText().toString(),5005);
+                ps= new PrintStream( Server.getOutputStream());
+                dis= new DataInputStream (Server.getInputStream());
+                System.out.println("logging in");
+                JSONObject obj = new JSONObject();
+                obj.put("operation", "login");
+                obj.put("username", usernamereg.getText());
+                obj.put("password", passwordreg.getText());
                 
-                if(clientExist != null){
-                    
-                    System.out.println("This username already in use!");
-                    validUsernameAndPass.setVisible(false);
-                    usernameUsed.setVisible(true);
-                    
-                } else {
-                    
-                    controller.goToListView(actionEvent);
-                    client.setUsername((usernamereg.getText()));
-                    client.setPassword((passwordreg.getText())); //replace
-                    client.setScore(0);
-                    UsersListBase.nameList(client);
-                    DAL.InsertPlayer(client);
-                }
+                ps.print(obj);
+                System.out.println(obj.get("username"));
+                System.out.println(obj);
+                ps.flush();
+                ps.close();                
+                controller.goToListView(actionEvent);
+            } 
+            catch (IOException ex) {
+                Logger.getLogger(ClientNetwork.class.getName()).log(Level.SEVERE, null, ex);}
+            catch (JSONException ex) {
+                Logger.getLogger(LoginLayoutBase.class.getName()).log(Level.SEVERE, null, ex);
                 
-            } else {
-                
-                System.out.println("Please enter a valid username and password");
-                validUsernameAndPass.setVisible(true);
-                usernameUsed.setVisible(false);
-            }
-            
-        } 
-       
-        catch (IOException ex) {
-            Logger.getLogger(LoginLayoutBase.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-    }
-    
-    protected void backToLoginAction(javafx.event.ActionEvent actionEvent) {
-        
-        try {
-            controller.goToLogin(actionEvent);
-        } catch (IOException ex) {
-            Logger.getLogger(RegisterBase.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    
-    }
+           
 
+            } 
+           
+    }
 }
+
+
+
 

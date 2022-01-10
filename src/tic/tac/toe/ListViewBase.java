@@ -30,14 +30,13 @@ public  class ListViewBase extends AnchorPane {
     protected final Button button;
     protected final Button backbtn;
     
-    protected final Label IP_not_exist;
     protected final Pane pane;
     
     boolean retrieved = false;
 
     public ListViewBase(Stage stage) {
 
-        IP_not_exist = new Label();
+ 
         pane = new Pane();
         
         ListView = new ListView();
@@ -89,29 +88,7 @@ public  class ListViewBase extends AnchorPane {
         label0.setPrefWidth(54.0);
         label0.setText("Score");
         label0.setFont(new Font("System Bold", 16.0));
-
-        IpAddress.setLayoutX(126.0);
-        IpAddress.setLayoutY(84.0);
-        IpAddress.setPrefHeight(25.0);
-        IpAddress.setPrefWidth(340.0);
-        IpAddress.setPromptText("Enter your IP Address");
-
-        label1.setLayoutX(14.0);
-        label1.setLayoutY(80.0);
-        label1.setPrefHeight(26.0);
-        label1.setPrefWidth(92.0);
-        label1.setText("IP  Address");
-        label1.setFont(new Font(17.0));
-
-        Enter.setLayoutX(517.0);
-        Enter.setLayoutY(80.0);
-        Enter.setMnemonicParsing(false);
-        Enter.setOnAction(this::enterIP);
-        Enter.setPrefHeight(25.0);
-        Enter.setPrefWidth(65.0);
-        Enter.setText("Enter");
-        Enter.setFont(new Font(13.0));
-
+  
         label2.setLayoutX(15.0);
         label2.setLayoutY(158.0);
         label2.setPrefHeight(30.0);
@@ -139,18 +116,10 @@ public  class ListViewBase extends AnchorPane {
         pane.setPrefHeight(200.0);
         pane.setPrefWidth(200.0);
         
-        IP_not_exist.setAlignment(javafx.geometry.Pos.CENTER);
-        IP_not_exist.setLayoutX(216.0);
-        IP_not_exist.setLayoutY(22.0);
-        IP_not_exist.setPrefHeight(27.0);
-        IP_not_exist.setPrefWidth(162.0);
-        IP_not_exist.setText("Wrong Password");
-        IP_not_exist.setTextFill(javafx.scene.paint.Color.RED);
-        IP_not_exist.setVisible(false);
-        IP_not_exist.setFont(new Font(18.0));
+       
      //  setTop(stage);
 
-        pane.getChildren().add(IP_not_exist);
+        pane.
         getChildren().add(pane);
 
         getChildren().add(ListView);
@@ -160,7 +129,6 @@ public  class ListViewBase extends AnchorPane {
         getChildren().add(label0);
         getChildren().add(IpAddress);
         getChildren().add(label1);
-        getChildren().add(Enter);
         getChildren().add(label2);
         getChildren().add(button);
         getChildren().add(backbtn);
@@ -171,9 +139,11 @@ public  class ListViewBase extends AnchorPane {
         Score.setText(String.valueOf(user.getScore()));
        
        };
-
+      
+    /*
     protected void enterIP(javafx.event.ActionEvent actionEvent)
     {
+        
         String ip = new String(IpAddress.getText());
         
         ClientNetwork.setIP(IpAddress.getText());
@@ -182,7 +152,7 @@ public  class ListViewBase extends AnchorPane {
         if(IpAddress.getText().isEmpty()){
             
             System.out.println("ENTER THE IP ADDRESS");
-            IP_not_exist.setVisible(false);
+            //IP_not_exist.setVisible(false);
         }
             else {
             
@@ -214,18 +184,18 @@ public  class ListViewBase extends AnchorPane {
             Logger.getLogger(ListViewBase.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-    };
+    };*/
 
     protected  void sendRequest(javafx.event.ActionEvent actionEvent)
     {
         
         
-        User name = new User();
+       /* User name = new User();
         Object n = ListView.getSelectionModel().getSelectedItem();
 
         //name.setUsername(n.toString());
 
-        System.out.println(ListView.getSelectionModel().getSelectedItem());
+        System.out.println(ListView.getSelectionModel().getSelectedItem());*/
 
     };
 

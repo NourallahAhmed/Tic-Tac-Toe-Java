@@ -66,11 +66,27 @@
                   <Insets left="60.0" top="70.0" />
                </GridPane.margin>
             </Text>
+            <PasswordField id="passwordfieldreg" fx:id="passwordreg1" prefHeight="39.0" prefWidth="366.0" promptText="Enter the IP Address" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="70.0" />
+               </GridPane.margin>
+            </PasswordField>
+            <Text id="passwordtextreg" strokeType="OUTSIDE" strokeWidth="0.0" text="IP Address" GridPane.rowIndex="3">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="60.0" right="15.0" top="70.0" />
+               </GridPane.margin>
+            </Text>
          </children>
       </GridPane>
    </left>
    <bottom>
-      <GridPane prefHeight="132.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+      <GridPane fx:id="IPfeild" prefHeight="132.0" prefWidth="600.0" BorderPane.alignment="CENTER">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="585.0" minWidth="10.0" prefWidth="556.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="291.0" minWidth="10.0" prefWidth="44.0" />
@@ -86,7 +102,7 @@
                   <Font name="System Bold" size="16.0" />
                </font>
                <GridPane.margin>
-                  <Insets left="230.0" top="-50.0" />
+                  <Insets left="230.0" top="70.0" />
                </GridPane.margin>
             </Button>
          </children>

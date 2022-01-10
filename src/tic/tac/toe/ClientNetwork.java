@@ -141,13 +141,8 @@ public  class ClientNetwork extends AnchorPane  {
                 {
                     try {
                         
-                        /*
-                        String str=draw.DRAWXO();
-                        str= dis.readLine();
-                        Tile t = new Tile(draw);
-                        */
+                    
                         String msg = dis.readLine();
-                        //TextArea.appendText(msg+"\n");
                     } 
                     catch(SocketException e)
                     {

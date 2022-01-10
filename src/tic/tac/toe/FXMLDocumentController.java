@@ -38,7 +38,7 @@ public class FXMLDocumentController {
     
     public void goToLogin(ActionEvent event) throws IOException {
 
-        root = new LoginBase(stage);
+        root = new LoginLayoutBase(stage);
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
@@ -48,7 +48,7 @@ public class FXMLDocumentController {
 
     public void goToRegister(ActionEvent event) throws IOException {
 
-        root = new RegisterBase(stage);
+        root = new RegisterLayoutBase(stage);
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
