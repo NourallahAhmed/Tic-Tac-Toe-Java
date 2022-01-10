@@ -215,9 +215,10 @@ public class LoginLayoutBase extends AnchorPane {
                 //ps.print("nour btmasiii 3lik ya SERVEEEEEEEEEEEEER");
                 System.out.println(obj.get("username"));
                 System.out.println(obj);
-                //controller.goToListView(actionEvent);
                 ps.flush();
-                ps.close();               
+                ps.close();  
+                controller.goToListView(actionEvent);
+
                 
 
             } 

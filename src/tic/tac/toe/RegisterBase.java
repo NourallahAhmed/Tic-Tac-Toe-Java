@@ -22,7 +22,7 @@ import javafx.stage.Stage;
 
 public  class RegisterBase extends BorderPane {
     
-    User client = new User();
+    //User client = new User();
     FXMLDocumentController controller = new FXMLDocumentController();
     
     protected final GridPane gridPane;
@@ -253,11 +253,11 @@ public  class RegisterBase extends BorderPane {
 
     protected void gameModeAction(javafx.event.ActionEvent actionEvent) {
         
-        try {
+        /* try {
             
             User clientExist = DAL.checkUserExits(usernamereg.getText());
             
-            if(!usernamereg.getText().equals("") && passwordreg.getText().length() > 6){
+           if(!usernamereg.getText().equals("") && passwordreg.getText().length() > 6){
                 
                 if(clientExist != null){
                     
@@ -286,7 +286,7 @@ public  class RegisterBase extends BorderPane {
        
         catch (IOException ex) {
             Logger.getLogger(LoginLayoutBase.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
         
     }
     

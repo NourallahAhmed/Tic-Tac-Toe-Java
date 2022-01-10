@@ -23,20 +23,20 @@ public  class ListViewBase extends AnchorPane {
     protected static Text playername;
     protected static Text Score;
     protected final Label label0;
-    protected final TextField IpAddress;
+//    protected final TextField IpAddress;
     protected final Label label1;
     protected final Button Enter;
     protected final Label label2;
     protected final Button button;
     protected final Button backbtn;
-    
+    protected final Stage mystage;
     protected final Pane pane;
     
     boolean retrieved = false;
 
     public ListViewBase(Stage stage) {
 
- 
+        mystage= stage;
         pane = new Pane();
         
         ListView = new ListView();
@@ -44,7 +44,7 @@ public  class ListViewBase extends AnchorPane {
         playername = new Text();
         Score = new Text();
         label0 = new Label();
-        IpAddress = new TextField();
+       // IpAddress = new TextField();
         label1 = new Label();
         Enter = new Button();
         label2 = new Label();
@@ -119,7 +119,7 @@ public  class ListViewBase extends AnchorPane {
        
      //  setTop(stage);
 
-        pane.
+      
         getChildren().add(pane);
 
         getChildren().add(ListView);
@@ -127,18 +127,13 @@ public  class ListViewBase extends AnchorPane {
         getChildren().add(playername);
         getChildren().add(Score);
         getChildren().add(label0);
-        getChildren().add(IpAddress);
+     //   getChildren().add(IpAddress);
         getChildren().add(label1);
         getChildren().add(label2);
         getChildren().add(button);
         getChildren().add(backbtn);
 
     }
-      public static void nameList(User user){
-        playername.setText(user.getUsername());
-        Score.setText(String.valueOf(user.getScore()));
-       
-       };
       
     /*
     protected void enterIP(javafx.event.ActionEvent actionEvent)
@@ -185,9 +180,11 @@ public  class ListViewBase extends AnchorPane {
         }
 
     };*/
+    
 
+    
     protected  void sendRequest(javafx.event.ActionEvent actionEvent)
-    {
+    {};
         
         
        /* User name = new User();
@@ -197,7 +194,7 @@ public  class ListViewBase extends AnchorPane {
 
         System.out.println(ListView.getSelectionModel().getSelectedItem());*/
 
-    };
+    
 
     
     protected  void BackAction(javafx.event.ActionEvent actionEvent) 
