@@ -10,6 +10,8 @@
 
 package tic.tac.toe;
 
+//import serverxogame.DAL;
+//import serverxogame.User;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.geometry.Insets;
@@ -121,15 +123,10 @@ public class UsersListBase extends AnchorPane {
  
     }
        
-    public static void nameList(User user){
-        player.setText(user.getUsername());
-        score.setText(String.valueOf(user.getScore()));
        
-       };
-    
     public void selectPlayer(javafx.event.ActionEvent actionEvent){
         
-        User name = new User();
+     //   User name = new User();
         Object n = listView.getSelectionModel().getSelectedItem();
 
         //name.setUsername(n.toString());
@@ -139,7 +136,7 @@ public class UsersListBase extends AnchorPane {
      };
     
     public void serverOnOff(javafx.event.ActionEvent actionEvent) 
-    {
+    {/*
         if(!retrieved){
         List<User> users = new ArrayList<>();
 
@@ -158,7 +155,7 @@ public class UsersListBase extends AnchorPane {
         } else {
             listView.getItems().clear();
             retrieved = false;
-        }
+        }*/
         
     };
     

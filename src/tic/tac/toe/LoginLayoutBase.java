@@ -200,27 +200,17 @@ public class LoginLayoutBase extends AnchorPane {
             
                   
             try {
-                //Server= new Socket("172.16.12.13",5005); //ip
                 Server= new Socket(ipLogin.getText().toString(),5005); //ip
                 ps= new PrintStream( Server.getOutputStream());
                 dis= new DataInputStream (Server.getInputStream());
-                System.out.println("logging in");
                 JSONObject obj = new JSONObject();
                 obj.put("operation", "login");
                 obj.put("username", usernamelog.getText());
                 obj.put("password", passwordlog.getText());
-              
-                //obj.put("ip", ipLogin.getText());
-                ps.print(obj);
-                //ps.print("nour btmasiii 3lik ya SERVEEEEEEEEEEEEER");
-                System.out.println(obj.get("username"));
-                System.out.println(obj);
+                ps.println(obj);
                 ps.flush();
-                ps.close();  
+                ps.close(); 
                 controller.goToListView(actionEvent);
-
-                
-
             } 
             catch (IOException ex) {
                 Logger.getLogger(ClientNetwork.class.getName()).log(Level.SEVERE, null, ex);} catch (JSONException ex) {
@@ -243,6 +233,7 @@ public class LoginLayoutBase extends AnchorPane {
                         
                     
                         String msg = dis.readLine();
+                        //System.out.println("i recieved this"+msg);
                     } 
                     catch(SocketException e)
                     {
@@ -280,7 +271,7 @@ protected  void registerAction(javafx.event.ActionEvent actionEvent){
         try {controller.goToRegister(actionEvent);} 
         catch (IOException ex) {Logger.getLogger(LoginLayoutBase.class.getName()).log(Level.SEVERE, null, ex);}};
     
-    protected  void BackAction(javafx.event.ActionEvent actionEvent){ 
+protected  void BackAction(javafx.event.ActionEvent actionEvent){ 
         try {FXMLDocumentController controller=new FXMLDocumentController();
             controller.goToGameMode(actionEvent);} 
         catch (IOException ex) {Logger.getLogger(ListViewBase.class.getName()).log(Level.SEVERE, null, ex);}
