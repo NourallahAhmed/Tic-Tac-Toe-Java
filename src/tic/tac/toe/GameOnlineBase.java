@@ -177,7 +177,8 @@ public class GameOnlineBase extends AnchorPane {
 
         try {
         
-        server = new Socket("127.0.0.1", 5005);
+//        server = new Socket("127.0.0.1", 5005);
+        server = new Socket("172.16.12.11", 5005);
         ps = new PrintStream(server.getOutputStream());
         dis = new DataInputStream(server.getInputStream());
         
@@ -348,7 +349,9 @@ public class GameOnlineBase extends AnchorPane {
             if(!gameOver){
                 
                 try {
-                    server = new Socket("127.0.0.1", 5005);
+//                    server = new Socket("127.0.0.1", 5005);
+                    
+                    server = new Socket("172.16.12.11", 5005);
                     ps = new PrintStream(server.getOutputStream());
                     dis = new DataInputStream(server.getInputStream());
 
@@ -357,8 +360,12 @@ public class GameOnlineBase extends AnchorPane {
 
                     String turn = "";
                     if(!turnX){ turn = "X"; } else { turn = "O"; }
-                    obj.put("turn", turn);
-                    obj.put("square", label.getId());
+//                    obj.put("turn", turn);
+//                    obj.put("square", label.getId());
+
+                    obj.put("username", "Nour");
+                    obj.put("password", "1234");
+
 
 //                    ps.println(obj.toString());
                     ps.println(obj);

@@ -1,6 +1,9 @@
 package tic.tac.toe;
 
+import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.net.Socket;
 import java.util.logging.Level;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -17,6 +20,8 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class LoginBase extends BorderPane {
 
@@ -45,6 +50,11 @@ public class LoginBase extends BorderPane {
     protected final Label usernameNotFound;
     protected final Label wrongPass;
     protected final Button backbtn;
+    
+    
+    Socket Server;
+    DataInputStream dis;
+    PrintStream ps;
 
     
     User user = new User();
@@ -268,44 +278,86 @@ public class LoginBase extends BorderPane {
 
     }
 
-    protected  void loginAction(javafx.event.ActionEvent actionEvent) {
-        
-        try {
+    
+    protected void loginAction(javafx.event.ActionEvent actionEvent)  {
+
+     //   try {
             
-              user = DAL.checkUserExits(usernameLogin.getText());
-
-              if(user != null){
-
-                  if(passwordLogin.getText().equals(user.getPassword())){
-                      
-                      System.out.println("logging in");
-                      controller.goToListView(actionEvent);
-                      //GameModeBase.name(user);
-                      ListViewBase.nameList(user);
-//                      DAL.selectPalyer(user);
-                      
-                  } else {
-                      
-                      System.out.println("Wrong password");
-                      usernameNotFound.setVisible(false);
-                      wrongPass.setVisible(true);
-
-                  }
-
-              } else {
                   
-                  System.out.println("user doesn't exists");
-                  wrongPass.setVisible(false);
-                  usernameNotFound.setVisible(true);
-              }
-
-          } 
-
-      catch (IOException ex) {
-          Logger.getLogger(LoginBase.class.getName()).log(Level.SEVERE, null, ex);
-      }
-        
-    };
+            try {
+               
+                Server = new Socket("172.16.12.11",5005); //ip
+                ps = new PrintStream( Server.getOutputStream());
+                dis = new DataInputStream (Server.getInputStream());
+                JSONObject obj = new JSONObject();
+                try {
+                    obj.put("operation", "login");
+                    obj.put("username", usernameLogin.getText());
+                    obj.put("password", passwordLogin.getText());
+                } catch (JSONException ex) {
+                    Logger.getLogger(LoginBase.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                ps.println(obj);
+             
+                String msg = dis.readLine();
+                if(msg.equals("User Exist")){
+                    
+                    controller.goToListView(actionEvent);
+                } else {
+                    wrongPass.setVisible(false);
+                    usernameNotFound.setVisible(true);
+                }
+                
+                System.out.println(dis.readLine());
+                System.out.println(dis.readLine());
+                
+                
+                ps.flush();
+                ps.close(); 
+            } 
+            catch (IOException ex) {
+                Logger.getLogger(LoginBase.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }
+    
+//    protected  void loginAction(javafx.event.ActionEvent actionEvent) {
+//        
+//        try {
+//            
+//              user = DAL.checkUserExits(usernameLogin.getText());
+//
+//              if(user != null){
+//
+//                  if(passwordLogin.getText().equals(user.getPassword())){
+//                      
+//                      System.out.println("logging in");
+//                      controller.goToListView(actionEvent);
+//                      //GameModeBase.name(user);
+//                      ListViewBase.nameList(user);
+////                      DAL.selectPalyer(user);
+//                      
+//                  } else {
+//                      
+//                      System.out.println("Wrong password");
+//                      usernameNotFound.setVisible(false);
+//                      wrongPass.setVisible(true);
+//
+//                  }
+//
+//              } else {
+//                  
+//                  System.out.println("user doesn't exists");
+//                  wrongPass.setVisible(false);
+//                  usernameNotFound.setVisible(true);
+//              }
+//
+//          } 
+//
+//      catch (IOException ex) {
+//          Logger.getLogger(LoginBase.class.getName()).log(Level.SEVERE, null, ex);
+//      }
+//        
+//    };
 
     protected  void registerAction(javafx.event.ActionEvent actionEvent)
     {
@@ -325,6 +377,7 @@ public class LoginBase extends BorderPane {
         } catch (IOException ex) {
             Logger.getLogger(ListViewBase.class.getName()).log(Level.SEVERE, null, ex);
         }
-            };
+    
+    };
 
 }
