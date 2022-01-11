@@ -6,6 +6,7 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -19,6 +20,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.json.JSONException;
 import org.json.JSONObject;
+import static tic.tac.toe.LoginLayoutBase.Server;
 
 public  class RegisterLayoutBase extends BorderPane {
 
@@ -207,7 +209,7 @@ public  class RegisterLayoutBase extends BorderPane {
         GridPane.setRowIndex(button, 1);
         button.setId("registerbtn");
         button.setMnemonicParsing(false);
-        //button.setOnAction(this::registeraction);
+        button.setOnAction(this::registeraction);
         button.setPrefHeight(37.0);
         button.setPrefWidth(129.0);
         button.setText("Register");
@@ -237,37 +239,50 @@ public  class RegisterLayoutBase extends BorderPane {
         IPfeild.getChildren().add(button);
 
     }
-/*
+
     protected void registeraction(javafx.event.ActionEvent actionEvent){
       try {
-          
-          
-               // Server= new Socket("127.0.0.1",5005); //ip
-                Server = new Socket(IPreg.getText().toString(),5005);
-                ps= new PrintStream( Server.getOutputStream());
-                dis= new DataInputStream (Server.getInputStream());
-                System.out.println("logging in");
-                JSONObject obj = new JSONObject();
-                obj.put("operation", "login");
-                obj.put("username", usernamereg.getText());
-                obj.put("password", passwordreg.getText());
-                
-                ps.print(obj);
-                System.out.println(obj.get("username"));
-                System.out.println(obj);
-                ps.flush();
-                ps.close();                
-                controller.goToListView(actionEvent);
-            } 
-            //catch (IOException ex) {Logger.getLogger(ClientNetwork.class.getName()).log(Level.SEVERE, null, ex);}
-            catch (JSONException ex) {
-                Logger.getLogger(LoginLayoutBase.class.getName()).log(Level.SEVERE, null, ex);
-                
-           
+            
+            Server= new Socket(IPreg.getText(),5005);
+            JSONObject obj = new JSONObject();
+            obj.put("operation", "register");
+            obj.put("usernamereg", usernamereg.getText());
+            obj.put("passwordreg", passwordreg.getText());  
+            obj.put("ip", IPreg.getText());  
+            
+            ConnectToServer connect= new ConnectToServer();
+            connect.logindata(obj.toString());
+            
+            //System.out.println("login"+connect.recieved());
+            
+            Thread th = new Thread (){
+                public void run() {
+                    String result = connect.recieved();
+                    System.out.println(result);
+                    if (result.equals("gotolist")) {
+                        System.out.println("i am get in ");
+                       
+                            Platform.runLater(()->{
+                                try {
+                                    this.stop();
 
-            } 
+                                    controller.goToListView(actionEvent);
+                                } catch (IOException ex) {
+                                    Logger.getLogger(LoginLayoutBase.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            });
+                        } 
+        
+                    }
+                };
+                th.start();
+  
+        } catch (JSONException ex) {
+            Logger.getLogger(LoginLayoutBase.class.getName()).log(Level.SEVERE, null, ex);} catch (IOException ex) { 
+            Logger.getLogger(RegisterLayoutBase.class.getName()).log(Level.SEVERE, null, ex);
+        } 
            
-    }*/
+    }
 }
 
 

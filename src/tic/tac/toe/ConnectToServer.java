@@ -54,8 +54,11 @@ public class ConnectToServer {
             String reader =dis.readLine();
             JSONObject rec= new JSONObject(reader);
             System.out.println("Server says" +reader);
-            switch(rec.getString("login")){
+            switch(rec.getString("operation")){
                 case "User Exist":
+                    takeaction="gotolist";
+                    break;
+                case "regdone":
                     takeaction="gotolist";
                     break;
                 }
