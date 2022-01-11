@@ -207,7 +207,7 @@ public  class RegisterLayoutBase extends BorderPane {
         GridPane.setRowIndex(button, 1);
         button.setId("registerbtn");
         button.setMnemonicParsing(false);
-        button.setOnAction(this::registeraction);
+        //button.setOnAction(this::registeraction);
         button.setPrefHeight(37.0);
         button.setPrefWidth(129.0);
         button.setText("Register");
@@ -237,7 +237,7 @@ public  class RegisterLayoutBase extends BorderPane {
         IPfeild.getChildren().add(button);
 
     }
-
+/*
     protected void registeraction(javafx.event.ActionEvent actionEvent){
       try {
           
@@ -259,8 +259,7 @@ public  class RegisterLayoutBase extends BorderPane {
                 ps.close();                
                 controller.goToListView(actionEvent);
             } 
-            catch (IOException ex) {
-                Logger.getLogger(ClientNetwork.class.getName()).log(Level.SEVERE, null, ex);}
+            //catch (IOException ex) {Logger.getLogger(ClientNetwork.class.getName()).log(Level.SEVERE, null, ex);}
             catch (JSONException ex) {
                 Logger.getLogger(LoginLayoutBase.class.getName()).log(Level.SEVERE, null, ex);
                 
@@ -268,7 +267,7 @@ public  class RegisterLayoutBase extends BorderPane {
 
             } 
            
-    }
+    }*/
 }
 
 

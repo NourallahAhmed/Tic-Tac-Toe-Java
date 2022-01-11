@@ -5,8 +5,10 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -19,6 +21,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.json.JSONException;
 import org.json.JSONObject;
+import tic.tac.toe.ConnectToServer;
 
 public class LoginLayoutBase extends AnchorPane {
 
@@ -36,14 +39,14 @@ public class LoginLayoutBase extends AnchorPane {
     protected final Label wrongPass;
     protected final Button backbtn;
     protected final Label IP_not_exist;
-    Socket Server;
+    public static Socket Server;
     DataInputStream dis;
     PrintStream ps;
+
 
     FXMLDocumentController controller = new FXMLDocumentController();
 
     public LoginLayoutBase(Stage stage) {
-
         label = new Label();
         loginid = new Button();
         createaccount_id = new Button();
@@ -194,64 +197,58 @@ public class LoginLayoutBase extends AnchorPane {
    
     
 
-    protected void loginAction(javafx.event.ActionEvent actionEvent)  {
+    protected void loginAction(javafx.event.ActionEvent actionEvent)  {  
+        try {
+            
+            Server= new Socket(ipLogin.getText(),5005);
+            JSONObject obj = new JSONObject();
+            obj.put("operation", "login");
+            obj.put("username", usernamelog.getText());
+            obj.put("password", passwordlog.getText());  
+            obj.put("ip", ipLogin.getText());  
+            
+            ConnectToServer connect= new ConnectToServer();
+            connect.logindata(obj.toString());
+            
+            //System.out.println("login"+connect.recieved());
+            
+            Thread th = new Thread (){
+                public void run() {
+                    String result = connect.recieved();
+                    System.out.println(result);
+                    if (result.equals("gotolist")) {
+                        System.out.println("iam exist");
+                       
+                            Platform.runLater(()->{
+                                try {
+                                    this.stop();
 
-     //   try {
-            
-                  
-            try {
-                Server= new Socket(ipLogin.getText().toString(),5005); //ip
-                ps= new PrintStream( Server.getOutputStream());
-                dis= new DataInputStream (Server.getInputStream());
-                JSONObject obj = new JSONObject();
-                obj.put("operation", "login");
-                obj.put("username", usernamelog.getText());
-                obj.put("password", passwordlog.getText());
-                ps.println(obj);
-                ps.flush();
-                ps.close(); 
-                controller.goToListView(actionEvent);
-            } 
-            catch (IOException ex) {
-                Logger.getLogger(ClientNetwork.class.getName()).log(Level.SEVERE, null, ex);} catch (JSONException ex) {
-                Logger.getLogger(LoginLayoutBase.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-                 
-            
-        
-          //  if(!usernamelog.getText().equals("")){
-                               
-          
-            
-            new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true)
-                {
-                    try {
-                        
-                    
-                        String msg = dis.readLine();
-                        //System.out.println("i recieved this"+msg);
-                    } 
-                    catch(SocketException e)
-                    {
-                        try {
-                            dis.close();
-                        } catch (IOException ex) {
-                            Logger.getLogger(ClientNetwork.class.getName()).log(Level.SEVERE, null, ex);
-                        }}
-                    catch (IOException ex) {
-                        Logger.getLogger(ClientNetwork.class.getName()).log(Level.SEVERE, null, ex);
+                                    controller.goToListView(actionEvent);
+                                } catch (IOException ex) {
+                                    Logger.getLogger(LoginLayoutBase.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            });
+                        } 
+                     else {
+                        System.out.println("user doesn't exists");
+                        wrongPass.setVisible(false);
+                        usernameNotFound.setVisible(true);
                     }
-              
                 }
-            }
-        }).start(); 
+            };
+           th.start();
+                     
+        } catch (JSONException ex) {
+            Logger.getLogger(LoginLayoutBase.class.getName()).log(Level.SEVERE, null, ex);} 
+        catch (IOException ex) {
+            Logger.getLogger(LoginLayoutBase.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+        
+   
         
     /*
+    
         else {
         System.out.println("user doesn't exists");
         wrongPass.setVisible(false);
@@ -278,4 +275,96 @@ protected  void BackAction(javafx.event.ActionEvent actionEvent){
             };
    
 
+
+/*
+  protected void loginAction(javafx.event.ActionEvent actionEvent)  {  
+        try {
+  
+            
+            
+            Server= new Socket(ipLogin.getText(),5005); //ip]
+   
+            ps= new PrintStream( Server.getOutputStream());
+
+            dis= new DataInputStream (Server.getInputStream());
+
+
+            JSONObject obj = new JSONObject();
+            obj.put("operation", "login");
+            obj.put("username", usernamelog.getText());
+            obj.put("password", passwordlog.getText());  
+            
+            ps.println(obj);
+            
+            if (dis.readLine().matches("User Exist")) {
+                System.out.print("User Exist");
+
+                ListViewBase.getonline(dis.readLine());
+                controller.goToListView(actionEvent);
+
+
+            } else {
+                System.out.println("user doesn't exists");
+                wrongPass.setVisible(false);
+                usernameNotFound.setVisible(true);
+            }
+                
+                ps.flush();
+                ps.close();
+            //System.out.println(connect.Server);
+            //String connection = new String();
+            //connect.connectwithserver(ipLogin.getText());
+            
+            
+            //JSONObject obj = new JSONObject();
+            //obj.put("operation", "login");
+            //obj.put("username", usernamelog.getText());
+            //obj.put("password", passwordlog.getText());  
+            //connect.logindata(obj);
+            
+            //controller.goToListView(actionEvent);
+        } catch (JSONException ex) {
+            Logger.getLogger(LoginLayoutBase.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(LoginLayoutBase.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }
+
+*/
+
+
+  
+            //System.out.println(obj.get("operation"));
+           // connect.logindata(obj.toString());
+            
+            /*
+            if (dis.readLine().matches("User Exist")) {
+                System.out.print("User Exist");
+
+                ListViewBase.getonline(dis.readLine());
+                controller.goToListView(actionEvent);
+
+
+            } else {
+                System.out.println("user doesn't exists");
+                wrongPass.setVisible(false);
+                usernameNotFound.setVisible(true);
+            }
+                
+                ps.flush();
+                ps.close();
+                */
+            //System.out.println(connect.Server);
+            //String connection = new String();
+            //connect.connectwithserver(ipLogin.getText());
+            
+            
+            //JSONObject obj = new JSONObject();
+            //obj.put("operation", "login");
+            //obj.put("username", usernamelog.getText());
+            //obj.put("password", passwordlog.getText());  
+            //connect.logindata(obj);
+            
+            //controller.goToListView(actionEvent);
 }
+

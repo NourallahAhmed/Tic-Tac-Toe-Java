@@ -1,6 +1,10 @@
 package tic.tac.toe;
 
+
+import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -15,15 +19,20 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public  class ListViewBase extends AnchorPane {
+    
+    DataInputStream dis;
+    PrintStream ps;
 
-    protected final ListView ListView;
+    protected static ListView ListView;
     protected final Label label;
     protected static Text playername;
     protected static Text Score;
     protected final Label label0;
-//    protected final TextField IpAddress;
     protected final Label label1;
     protected final Button Enter;
     protected final Label label2;
@@ -38,7 +47,6 @@ public  class ListViewBase extends AnchorPane {
 
         mystage= stage;
         pane = new Pane();
-        
         ListView = new ListView();
         label = new Label();
         playername = new Text();
@@ -115,61 +123,75 @@ public  class ListViewBase extends AnchorPane {
         GridPane.setRowIndex(pane, 3);
         pane.setPrefHeight(200.0);
         pane.setPrefWidth(200.0);
-        
-       
-     //  setTop(stage);
-
-      
+   
         getChildren().add(pane);
-
         getChildren().add(ListView);
         getChildren().add(label);
         getChildren().add(playername);
         getChildren().add(Score);
         getChildren().add(label0);
-     //   getChildren().add(IpAddress);
         getChildren().add(label1);
         getChildren().add(label2);
         getChildren().add(button);
         getChildren().add(backbtn);
-
-    }
-      
-    /*
-    protected void enterIP(javafx.event.ActionEvent actionEvent)
-    {
         
-        String ip = new String(IpAddress.getText());
         
-        ClientNetwork.setIP(IpAddress.getText());
-        System.out.println("the IP "+IpAddress.getText());
         
-        if(IpAddress.getText().isEmpty()){
+     /*
+        
+        JSONObject onlineusers= new JSONObject();
+        try {
             
-            System.out.println("ENTER THE IP ADDRESS");
-            //IP_not_exist.setVisible(false);
+            
+            
+            onlineusers.put("operation","onlineuser");
+               ps.println(onlineusers);
+            getonline(dis.readLine());
+
+            
+            
+        } catch (JSONException ex) {
+            Logger.getLogger(ListViewBase.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ListViewBase.class.getName()).log(Level.SEVERE, null, ex);
         }
-            else {
+        
+    */
+        
+    };
+
+    public static void getonline(String str) {
+        
+        try {
+            JSONObject online = new JSONObject(str);
+            JSONArray listOnline=online.getJSONArray("online");
+            //System.out.println(listOnline);
+            JSONObject playerdata= online.getJSONObject("player data");
+            System.out.println(playerdata);
+
+            System.out.println(playerdata.get("playerName"));
+
+            playername.setText(playerdata.get("playerName").toString());
+            Score.setText(playerdata.get("playerScore").toString());
             
-            if(!retrieved){
-
-                List<User> users = new ArrayList<>();
-
-                users.addAll(DAL.retrieveAll());
-                int usersNum = users.size();
-
-                System.out.println("clients retrieved: " + users.toString());
-
-                for(int i = 0; i < usersNum; i++){
-                    ListView.getItems().add(users.get(i).getUsername());
-                    System.out.println("username: " + users.get(i).getUsername());}
-                
-                retrieved = true; }
+            for (int i =0 ; i<listOnline.length(); i++)
+            {
+                System.out.println("loop"+i);
+                ListView.getItems().add(listOnline.get(i).toString());
+            }
             
-            else {
-                ListView.getItems().clear();
-                retrieved = false;}
+            
+            
+            
+            
+        } catch (JSONException ex) {
+            Logger.getLogger(ListViewBase.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+    };
+        
+     
+        /*
 
         /////////<<<<<<TEST>>>>>>>////////////
         try {
@@ -184,7 +206,8 @@ public  class ListViewBase extends AnchorPane {
 
     
     protected  void sendRequest(javafx.event.ActionEvent actionEvent)
-    {};
+    {
+        System.out.println(ListView.getSelectionModel().getSelectedItem());};
         
         
        /* User name = new User();
