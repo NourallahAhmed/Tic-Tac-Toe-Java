@@ -5,7 +5,7 @@
             <url>src/tic/tac/toe/LoginLayoutBase.java</url>
             <bookmark id="1">
                 <name/>
-                <line>230</line>
+                <line>236</line>
                 <key/>
             </bookmark>
         </file>
@@ -13,9 +13,8 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/AL-alamia/Documents/GitHub/GAME/Tic-Tac-Toe-Java/src/tic/tac/toe/ConnectToServer.java</file>
-            <file>file:/C:/Users/AL-alamia/Documents/GitHub/GAME/Tic-Tac-Toe-Java/src/tic/tac/toe/FXMLDocumentController.java</file>
             <file>file:/C:/Users/AL-alamia/Documents/GitHub/GAME/Tic-Tac-Toe-Java/src/tic/tac/toe/LoginLayoutBase.java</file>
-            <file>file:/C:/Users/AL-alamia/Documents/GitHub/GAME/Tic-Tac-Toe-Java/src/tic/tac/toe/RegisterLayoutBase.java</file>
+            <file>file:/C:/Users/AL-alamia/Documents/GitHub/GAME/Tic-Tac-Toe-Java/src/tic/tac/toe/ListViewBase.java</file>
         </group>
     </open-files>
 </project-private>

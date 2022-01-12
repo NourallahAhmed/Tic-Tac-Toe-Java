@@ -39,5 +39,6 @@
          </font>
       </Button>
       <Button fx:id="backbtn" layoutX="571.0" layoutY="20.0" mnemonicParsing="false" onAction="#BackAction" prefHeight="25.0" prefWidth="65.0" text="HOME" AnchorPane.rightAnchor="14.0" />
+      <Button fx:id="enter" layoutX="403.0" layoutY="97.0" mnemonicParsing="false" onAction="#getonline" prefHeight="29.0" prefWidth="105.0" text="VIEW ONLINE" />
    </children>
 </AnchorPane>

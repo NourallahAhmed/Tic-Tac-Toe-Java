@@ -188,8 +188,8 @@ public class LoginLayoutBase extends AnchorPane {
         getChildren().add(passwordlog);
         getChildren().add(text);
         getChildren().add(text0);
-        getChildren().add(ipLogin);
-        getChildren().add(text1);
+        //getChildren().add(ipLogin);
+        //getChildren().add(text1);
         getChildren().add(usernameNotFound);
         getChildren().add(wrongPass);
     }   
@@ -200,14 +200,12 @@ public class LoginLayoutBase extends AnchorPane {
     protected void loginAction(javafx.event.ActionEvent actionEvent)  {  
         try {
             
-            Server= new Socket(ipLogin.getText(),5005);
             JSONObject obj = new JSONObject();
             obj.put("operation", "login");
             obj.put("username", usernamelog.getText());
             obj.put("password", passwordlog.getText());  
-            obj.put("ip", ipLogin.getText());  
-            
-            ConnectToServer connect= new ConnectToServer();
+            //obj.put("ip", ipLogin.getText());  
+            ConnectToServer connect= new ConnectToServer(); 
             connect.logindata(obj.toString());
             
             //System.out.println("login"+connect.recieved());
@@ -222,11 +220,19 @@ public class LoginLayoutBase extends AnchorPane {
                             Platform.runLater(()->{
                                 try {
                                     this.stop();
-
+                                    
+                                    //JSONObject data = new JSONObject();
+                                    //data.put("operation", "playerdata");
+                                    //data.put("username", usernamelog.getText());
+                                    //connect.mydata(data.toString());
+                                    //System.out.println(data);
+                                    //ListViewBase.Score.setText(data.getString("score"));
+                                    //ListViewBase.playername.setText(data.getString("username"));
                                     controller.goToListView(actionEvent);
+
                                 } catch (IOException ex) {
                                     Logger.getLogger(LoginLayoutBase.class.getName()).log(Level.SEVERE, null, ex);
-                                }
+                                } 
                             });
                         } 
                      else {
@@ -240,9 +246,7 @@ public class LoginLayoutBase extends AnchorPane {
                      
         } catch (JSONException ex) {
             Logger.getLogger(LoginLayoutBase.class.getName()).log(Level.SEVERE, null, ex);} 
-        catch (IOException ex) {
-            Logger.getLogger(LoginLayoutBase.class.getName()).log(Level.SEVERE, null, ex);
-        }
+      
     }
         
    

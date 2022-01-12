@@ -31,9 +31,11 @@ public class ConnectToServer {
     {
         try {
             //Server= new Socket(cs,5005);
-            ps= new PrintStream( LoginLayoutBase.Server.getOutputStream());
-            dis= new DataInputStream (LoginLayoutBase.Server.getInputStream());
+            ps= new PrintStream( IPADDBase.Server.getOutputStream());
+           
+            dis= new DataInputStream (IPADDBase.Server.getInputStream());
             
+
         } catch (IOException ex) {
             Logger.getLogger(ConnectToServer.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -46,20 +48,42 @@ public class ConnectToServer {
         System.out.println("sended" +str);
         
     }
+    
+    
+    public void loadonline() {
+        try {
+            System.out.println("loadonline is work");
+            JSONObject obj = new JSONObject();
+            obj.put("operation", "loadonline");
+            ps.println(obj);
+            System.out.println("loadonline is work send your ");
+
+        } catch (JSONException ex) {
+            Logger.getLogger(ConnectToServer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public String recieved()
     {
         String takeaction = null;
         try {
             
             String reader =dis.readLine();
-            JSONObject rec= new JSONObject(reader);
+            JSONObject rec= new JSONObject(reader); //all data     
             System.out.println("Server says" +reader);
             switch(rec.getString("operation")){
                 case "User Exist":
                     takeaction="gotolist";
                     break;
+                case "User Not Exist":
+                    takeaction="User Not Exist";
+                    break;
                 case "regdone":
                     takeaction="gotolist";
+                    break;
+                case "onlineready":
+                    takeaction="onlineready";
+                    System.out.println("server send your online data");
                     break;
                 }
         } catch (IOException ex) {
@@ -67,11 +91,36 @@ public class ConnectToServer {
         } catch (JSONException ex) {
             Logger.getLogger(ConnectToServer.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println(takeaction);
+        //System.out.println(takeaction);
         return takeaction;
-
     }
     
+    
+    public String recieveonline()
+    {
+        String confirm;
+        String reader = null;
+        try {
+            reader = dis.readLine(); // received 
+            JSONObject rec= new JSONObject(reader); //convert to JSON 
+            
+            System.out.println("Server says" +reader); //check
+            
+            if (rec.getString("operation").equals("onlineready")){
+                
+                confirm=reader;
+            }
+
+                } catch (IOException ex) {
+                    Logger.getLogger(ConnectToServer.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (JSONException ex) {
+                    Logger.getLogger(ConnectToServer.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+        return reader;
+        
+    }
+}
     
 /*
             //System.out.print(toserver);
@@ -105,5 +154,4 @@ public class ConnectToServer {
             
         
     }*/
-    
-}
+

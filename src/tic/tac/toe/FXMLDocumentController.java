@@ -86,5 +86,13 @@ public class FXMLDocumentController {
         //stage.setScene(scene);
         //stage.show();
     }
+
+    void gotoip(ActionEvent event) throws IOException {
+        root = new IPADDBase(stage);
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
     
 }

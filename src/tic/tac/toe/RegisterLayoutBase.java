@@ -39,7 +39,7 @@ public  class RegisterLayoutBase extends BorderPane {
     protected final Text text1;
     protected final TextField IPreg;
     protected final Text text2;
-    protected final GridPane IPfeild;
+   protected final GridPane IPfeild;
     protected final ColumnConstraints columnConstraints2;
     protected final ColumnConstraints columnConstraints3;
     protected final RowConstraints rowConstraints3;
@@ -48,10 +48,7 @@ public  class RegisterLayoutBase extends BorderPane {
     protected final Button button;
 
     
-    Socket Server;
-    DataInputStream dis;
-    PrintStream ps;
-
+    public static Socket Server;
     FXMLDocumentController controller = new FXMLDocumentController();
     public RegisterLayoutBase(Stage stage) {
 
@@ -180,6 +177,7 @@ public  class RegisterLayoutBase extends BorderPane {
         GridPane.setMargin(text2, new Insets(70.0, 15.0, 0.0, 60.0));
         setLeft(gridPane);
 
+
         BorderPane.setAlignment(IPfeild, javafx.geometry.Pos.CENTER);
         IPfeild.setPrefHeight(132.0);
         IPfeild.setPrefWidth(600.0);
@@ -229,36 +227,36 @@ public  class RegisterLayoutBase extends BorderPane {
         gridPane.getChildren().add(passwordreg);
         gridPane.getChildren().add(text0);
         gridPane.getChildren().add(text1);
-        gridPane.getChildren().add(IPreg);
-        gridPane.getChildren().add(text2);
+        //gridPane.getChildren().add(IPreg);
+        //gridPane.getChildren().add(text2);
+        
         IPfeild.getColumnConstraints().add(columnConstraints2);
         IPfeild.getColumnConstraints().add(columnConstraints3);
         IPfeild.getRowConstraints().add(rowConstraints3);
         IPfeild.getRowConstraints().add(rowConstraints4);
         IPfeild.getRowConstraints().add(rowConstraints5);
         IPfeild.getChildren().add(button);
-
+        
     }
 
     protected void registeraction(javafx.event.ActionEvent actionEvent){
       try {
             
-            Server= new Socket(IPreg.getText(),5005);
+            //Server= new Socket(IPreg.getText(),5005);
+            
             JSONObject obj = new JSONObject();
             obj.put("operation", "register");
             obj.put("usernamereg", usernamereg.getText());
             obj.put("passwordreg", passwordreg.getText());  
-            obj.put("ip", IPreg.getText());  
+//            obj.put("ip", IPreg.getText());  
             
             ConnectToServer connect= new ConnectToServer();
             connect.logindata(obj.toString());
-            
-            //System.out.println("login"+connect.recieved());
-            
+                       
             Thread th = new Thread (){
                 public void run() {
                     String result = connect.recieved();
-                    System.out.println(result);
+                    System.out.println("regester"+result);
                     if (result.equals("gotolist")) {
                         System.out.println("i am get in ");
                        
@@ -267,6 +265,11 @@ public  class RegisterLayoutBase extends BorderPane {
                                     this.stop();
 
                                     controller.goToListView(actionEvent);
+                                    //JSONObject data = new JSONObject(result);
+                                    //ListViewBase.Score.setText(data.getString("score"));
+                                    //ListViewBase.playername.setText(data.getString("username"));
+                                    //ListViewBase.playername.setText(usernamereg.getText());
+                                    //ListViewBase.Score.setText("0");
                                 } catch (IOException ex) {
                                     Logger.getLogger(LoginLayoutBase.class.getName()).log(Level.SEVERE, null, ex);
                                 }
@@ -278,7 +281,6 @@ public  class RegisterLayoutBase extends BorderPane {
                 th.start();
   
         } catch (JSONException ex) {
-            Logger.getLogger(LoginLayoutBase.class.getName()).log(Level.SEVERE, null, ex);} catch (IOException ex) { 
             Logger.getLogger(RegisterLayoutBase.class.getName()).log(Level.SEVERE, null, ex);
         } 
            
