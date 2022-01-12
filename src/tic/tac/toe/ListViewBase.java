@@ -3,6 +3,8 @@ package tic.tac.toe;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -13,11 +15,11 @@ import javafx.stage.Stage;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import static tic.tac.toe.ListViewBase22.playername;
+
 
 public class ListViewBase extends AnchorPane {
 
-    protected final ListView ListView;
+    protected static ListView ListView;
     protected final Label label;
     protected final Text playername;
     protected final Text Score;
@@ -135,6 +137,8 @@ public class ListViewBase extends AnchorPane {
         }
     };
 
+           
+             
     protected  void getonline(javafx.event.ActionEvent actionEvent) {
         ConnectToServer connect = new ConnectToServer();
         //send
@@ -146,18 +150,35 @@ public class ListViewBase extends AnchorPane {
 
             public void run() {
                 try {
-                    //{"online":{"online":"online","player data":"playerdata","operation":"onlineready"},"operation":"onlineready"} --> data
                     System.out.println("the thread is work");
                     String data = connect.recieveonline(); //data JSONObject of (operation and JSONObject ((playerdata , online)))
-                    
-                    System.out.println("LIST" + data);
-                   
                     JSONObject onlinedata = new JSONObject(data);
+                    
                     JSONArray onlinelist= onlinedata.getJSONArray("online");
-                    System.out.println(onlinelist);
-                    // JSONArray list = new  JSONArray( onlinelist.getJSONArray("online"));
-                    /*
-                    if (onlinedata.getString("operation").equals("onlineready")) {
+                   
+                    for (int i=0 ; i < onlinelist.length() ;i++ )
+                    {
+                      
+                        ListView.getItems().add(onlinelist.get(i));
+
+                    }
+
+                        this.stop();
+                        System.out.println("online deleveried");
+                }
+                 catch (JSONException ex) {
+                    Logger.getLogger(ListViewBase.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        };
+        th.start();
+    
+    };
+
+}
+/*
+ if (onlinedata.getString("operation").equals("onlineready")) {
                         //fetch player data first
                         JSONObject listdata = onlinedata.getJSONObject("online"); //  JSONObject ((playerdata , online)) --> object carry the list and player data
                         System.out.println(listdata);
@@ -178,19 +199,5 @@ public class ListViewBase extends AnchorPane {
                         for (int i = 0; i < listOnline.length(); i++) {
                             System.out.println("loop" + i);
                             ListView.getItems().add(listOnline.get(i).toString());
-                        }*/
-
-                        this.stop();
-                        System.out.println("online deleveried");
-                    }
-                 catch (JSONException ex) {
-                    Logger.getLogger(ListViewBase.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-
-        };
-        th.start();
-    
-    };
-
-}
+                        }
+*/
