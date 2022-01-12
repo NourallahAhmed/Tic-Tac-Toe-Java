@@ -55,6 +55,27 @@ public class FXMLDocumentController {
         stage.show();
     }
     
+    
+     public void gotorequest(ActionEvent event) throws IOException {
+
+        root = new requestBase(stage);
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    
+     
+    public void gotogame(ActionEvent event) throws IOException {
+
+        root = new requestBase(stage);
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+     
+     
     public void goToGameMode(ActionEvent event) throws IOException {
 
         root = new GameModeBase(stage);

@@ -11,8 +11,11 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.event.ActionEvent;
 import org.json.JSONException;
 import org.json.JSONObject;
+import tic.tac.toe.FXMLDocumentController; 
+
 
 /**
  *
@@ -66,6 +69,7 @@ public class ConnectToServer {
     public String recieved()
     {
         String takeaction = null;
+       
         try {
             
             String reader =dis.readLine();
@@ -83,7 +87,7 @@ public class ConnectToServer {
                     break;
                 case "you have invitaion":
                     takeaction="play";
-                    System.out.println("will play ");
+                    System.out.println("will play");
                     break;
                 }
         } catch (IOException ex) {
@@ -133,10 +137,36 @@ public class ConnectToServer {
             System.out.println("Invitaion sended ");
         } catch (JSONException ex) {
             Logger.getLogger(ConnectToServer.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        }    
+    }
+    
+    
+    
+    
+    JSONObject createInvetaion(String player)
+     {
+        JSONObject send = null;
+            try {
+                String massege= dis.readLine();
+                JSONObject invite = new JSONObject(massege);
+
+
+                if (invite.getString("operation").equals( "you have invitaion"))
+                { 
+
+                    send=invite;
+                };
+
+            } catch (IOException ex) {
+                Logger.getLogger(ConnectToServer.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (JSONException ex) {
+                Logger.getLogger(ConnectToServer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        System.out.println(send);
+       return(send);
         
     }
+    
 }
     
 /*

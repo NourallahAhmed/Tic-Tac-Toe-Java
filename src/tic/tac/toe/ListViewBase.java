@@ -29,6 +29,8 @@ public class ListViewBase extends AnchorPane {
     protected final Button button;
     protected final Button backbtn;
     protected final Button enter;
+    protected final Button ONSERVER;
+
     Stage mystage;
         FXMLDocumentController controller = new FXMLDocumentController();
 
@@ -45,6 +47,7 @@ public class ListViewBase extends AnchorPane {
         button = new Button();
         backbtn = new Button();
         enter = new Button();
+        ONSERVER = new Button();
 
         setId("AnchorPane");
         setPrefHeight(555.0);
@@ -114,7 +117,17 @@ public class ListViewBase extends AnchorPane {
         enter.setPrefHeight(29.0);
         enter.setPrefWidth(105.0);
         enter.setText("VIEW ONLINE");
-
+        
+        
+        ONSERVER.setLayoutX(260.0);
+        ONSERVER.setLayoutY(97.0);
+        ONSERVER.setMnemonicParsing(false);
+        ONSERVER.setOnAction(this::receving);
+        ONSERVER.setPrefHeight(29.0);
+        ONSERVER.setPrefWidth(105.0);
+        ONSERVER.setText("OPEN SERVER");
+        
+        
         getChildren().add(ListView);
         getChildren().add(label);
         getChildren().add(playername);
@@ -124,34 +137,54 @@ public class ListViewBase extends AnchorPane {
         getChildren().add(button);
         getChildren().add(backbtn);
         getChildren().add(enter);
+        getChildren().add(ONSERVER);
 
     }
 
+    protected  void receving (javafx.event.ActionEvent actionEvent){
+        Thread th = new Thread() {
+
+               public void run() {
+                   try {
+                       //recieveing
+                        ConnectToServer connect = new ConnectToServer();
+
+                       String result = connect.recieveonline();
+                       JSONObject obj = new JSONObject(result);
+
+                       System.out.println(obj.getString("operation"));
+
+                       System.out.println(result);
+                       if (obj.getString("operation").equals("you have invitaion")) {
+                           System.out.println("the player will recieve");
+
+                           Platform.runLater(()->{
+                               try {
+                                   this.stop();
+                                   controller.gotorequest(actionEvent);
+
+                               } catch (IOException ex) {
+                                   Logger.getLogger(LoginLayoutBase.class.getName()).log(Level.SEVERE, null, ex);
+                               }
+                           });
+                       }
+                   } catch (JSONException ex) {
+                       Logger.getLogger(ListViewBase.class.getName()).log(Level.SEVERE, null, ex);
+                   }
+               }};
+            th.start();
+
+    
+    };
     protected  void sendRequest(javafx.event.ActionEvent actionEvent) {
         
         System.out.println(ListView.getSelectionModel().getSelectedItem());
+        
         ConnectToServer connect = new ConnectToServer();
+        //send
         connect.sendInvitaionto(ListView.getSelectionModel().getSelectedItem().toString());
         
-        Thread th = new Thread() {
-
-           public void run() {
-                    String result = connect.recieved();
-                    System.out.println(result);
-                    if (result.equals("play")) {
-                        System.out.println("the player will recieve");
-                       
-                            Platform.runLater(()->{
-                                try {
-                                    this.stop();
-                                    controller.goToVideo(actionEvent);
-
-                                } catch (IOException ex) {
-                                    Logger.getLogger(LoginLayoutBase.class.getName()).log(Level.SEVERE, null, ex);
-                                } 
-                            });
-                        } }};
-        th.start();
+        
 
         System.out.println("sending");
     };
