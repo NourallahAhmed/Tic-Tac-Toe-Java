@@ -3,6 +3,7 @@ package tic.tac.toe;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -29,6 +30,8 @@ public class ListViewBase extends AnchorPane {
     protected final Button backbtn;
     protected final Button enter;
     Stage mystage;
+        FXMLDocumentController controller = new FXMLDocumentController();
+
     public ListViewBase( Stage stage) {
         
         mystage =stage;
@@ -125,6 +128,31 @@ public class ListViewBase extends AnchorPane {
     }
 
     protected  void sendRequest(javafx.event.ActionEvent actionEvent) {
+        
+        System.out.println(ListView.getSelectionModel().getSelectedItem());
+        ConnectToServer connect = new ConnectToServer();
+        connect.sendInvitaionto(ListView.getSelectionModel().getSelectedItem().toString());
+        
+        Thread th = new Thread() {
+
+           public void run() {
+                    String result = connect.recieved();
+                    System.out.println(result);
+                    if (result.equals("play")) {
+                        System.out.println("the player will recieve");
+                       
+                            Platform.runLater(()->{
+                                try {
+                                    this.stop();
+                                    controller.goToVideo(actionEvent);
+
+                                } catch (IOException ex) {
+                                    Logger.getLogger(LoginLayoutBase.class.getName()).log(Level.SEVERE, null, ex);
+                                } 
+                            });
+                        } }};
+        th.start();
+
         System.out.println("sending");
     };
 
@@ -136,9 +164,7 @@ public class ListViewBase extends AnchorPane {
             Logger.getLogger(ListViewBase.class.getName()).log(Level.SEVERE, null, ex);
         }
     };
-
-           
-             
+       
     protected  void getonline(javafx.event.ActionEvent actionEvent) {
         ConnectToServer connect = new ConnectToServer();
         //send
@@ -175,29 +201,4 @@ public class ListViewBase extends AnchorPane {
         th.start();
     
     };
-
 }
-/*
- if (onlinedata.getString("operation").equals("onlineready")) {
-                        //fetch player data first
-                        JSONObject listdata = onlinedata.getJSONObject("online"); //  JSONObject ((playerdata , online)) --> object carry the list and player data
-                        System.out.println(listdata);
-
-                        JSONArray listOnline = listdata.getJSONArray("online");
-                        System.out.println(listOnline);
-
-                        //current player data
-                        JSONObject player = listdata.getJSONObject("playerdata");
-                        System.out.println(player);
-                        System.out.println(player.get("playerName"));
-
-                        //edit the UI with player data
-                        playername.setText(player.get("playerName").toString());
-                        Score.setText(player.get("playerScore").toString());
-
-                        //list view 
-                        for (int i = 0; i < listOnline.length(); i++) {
-                            System.out.println("loop" + i);
-                            ListView.getItems().add(listOnline.get(i).toString());
-                        }
-*/

@@ -220,14 +220,6 @@ public class LoginLayoutBase extends AnchorPane {
                             Platform.runLater(()->{
                                 try {
                                     this.stop();
-                                    
-                                    //JSONObject data = new JSONObject();
-                                    //data.put("operation", "playerdata");
-                                    //data.put("username", usernamelog.getText());
-                                    //connect.mydata(data.toString());
-                                    //System.out.println(data);
-                                    //ListViewBase.Score.setText(data.getString("score"));
-                                    //ListViewBase.playername.setText(data.getString("username"));
                                     controller.goToListView(actionEvent);
 
                                 } catch (IOException ex) {

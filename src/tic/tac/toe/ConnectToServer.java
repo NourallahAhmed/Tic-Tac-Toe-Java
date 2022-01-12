@@ -81,9 +81,9 @@ public class ConnectToServer {
                 case "regdone":
                     takeaction="gotolist";
                     break;
-                case "onlineready":
-                    takeaction="onlineready";
-                    System.out.println("server send your online data");
+                case "you have invitaion":
+                    takeaction="play";
+                    System.out.println("will play ");
                     break;
                 }
         } catch (IOException ex) {
@@ -118,6 +118,23 @@ public class ConnectToServer {
                 }
 
         return reader;
+        
+    }
+
+    void sendInvitaionto(String player) {
+        
+        try {
+            JSONObject object = new JSONObject();
+            object.put("operation", "invitation");
+            object.put("toplayer",player);
+            
+            ps.println(object);
+            
+            System.out.println("Invitaion sended ");
+        } catch (JSONException ex) {
+            Logger.getLogger(ConnectToServer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         
     }
 }
