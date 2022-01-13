@@ -220,7 +220,7 @@ public class LoginLayoutBase extends AnchorPane {
                             Platform.runLater(()->{
                                 try {
                                     this.stop();
-                                    controller.goToListView(actionEvent);
+                                    controller.goToListView(actionEvent, usernamelog.getText());
 
                                 } catch (IOException ex) {
                                     Logger.getLogger(LoginLayoutBase.class.getName()).log(Level.SEVERE, null, ex);

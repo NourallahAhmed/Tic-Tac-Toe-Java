@@ -264,7 +264,7 @@ public  class RegisterLayoutBase extends BorderPane {
                                 try {
                                     this.stop();
 
-                                    controller.goToListView(actionEvent);
+                                    controller.goToListView(actionEvent, usernamereg.getText());
                                     //JSONObject data = new JSONObject(result);
                                     //ListViewBase.Score.setText(data.getString("score"));
                                     //ListViewBase.playername.setText(data.getString("username"));

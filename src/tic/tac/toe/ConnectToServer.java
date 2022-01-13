@@ -74,7 +74,7 @@ public class ConnectToServer {
             
             String reader =dis.readLine();
             JSONObject rec= new JSONObject(reader); //all data     
-            System.out.println("Server says" +reader);
+            System.out.println("Server says" + reader);
             switch(rec.getString("operation")){
                 case "User Exist":
                     takeaction="gotolist";
@@ -86,6 +86,11 @@ public class ConnectToServer {
                     takeaction="gotolist";
                     break;
                 case "you have invitaion":
+                    takeaction="invite";
+                    System.out.println("will invite");
+                    break;
+                    
+                case "you have invitaion reply":
                     takeaction="play";
                     System.out.println("will play");
                     break;
@@ -125,12 +130,13 @@ public class ConnectToServer {
         
     }
 
-    void sendInvitaionto(String player) {
+    void sendInvitaionto(String sender ,String reciever) {
         
         try {
             JSONObject object = new JSONObject();
             object.put("operation", "invitation");
-            object.put("toplayer",player);
+            object.put("sender", sender);
+            object.put("reciever",reciever);
             
             ps.println(object);
             
@@ -140,6 +146,25 @@ public class ConnectToServer {
         }    
     }
     
+    
+    void replyInvitation(String sender, String reciever, String turn) {
+        
+        try {
+            
+            JSONObject object = new JSONObject();
+            object.put("operation", "reply_invitation");
+            object.put("sender", sender);
+            object.put("reciever", reciever);
+            object.put("turn", turn);
+            
+            ps.println(object);
+            
+            System.out.println("Invitaion Replied");
+            
+        } catch (JSONException ex) {
+            Logger.getLogger(ConnectToServer.class.getName()).log(Level.SEVERE, null, ex);
+        }    
+    }
     
     
     
@@ -153,8 +178,10 @@ public class ConnectToServer {
 
                 if (invite.getString("operation").equals( "you have invitaion"))
                 { 
-
-                    send=invite;
+                    send.put("operation", "you have invitaion");
+                    send.put("sender", invite.getString("sender"));
+                    send.put("reciever", invite.getString("reciever"));
+//                    send=invite;
                 };
 
             } catch (IOException ex) {

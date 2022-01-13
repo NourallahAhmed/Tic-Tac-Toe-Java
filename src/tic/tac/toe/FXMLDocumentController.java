@@ -27,8 +27,8 @@ public class FXMLDocumentController {
         stage.show();
     }
     
-    public void goToListView(ActionEvent event) throws IOException{
-        root = new ListViewBase(stage); // add video screen
+    public void goToListView(ActionEvent event, String username) throws IOException{
+        root = new ListViewBase(stage, username); // add video screen
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
@@ -100,12 +100,12 @@ public class FXMLDocumentController {
         stage.setScene(scene);
         stage.show();
     }
-     public void goToPlayOnline(ActionEvent event) throws IOException {
-        //root = new connectToServer(stage);
-        //stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        //scene = new Scene(root);
-        //stage.setScene(scene);
-        //stage.show();
+     public void goToPlayOnline(ActionEvent event, String turn) throws IOException {
+        root = new GameOnlineBase(stage, turn);
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     void gotoip(ActionEvent event) throws IOException {
