@@ -1,64 +1,67 @@
 package tic.tac.toe;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-public  class ListViewBase extends AnchorPane {
 
-    protected final ListView ListView;
+public class ListViewBase extends AnchorPane {
+
+    protected static ListView ListView;
     protected final Label label;
-    protected static Text playername;
-    protected static Text Score;
+    protected final Text playername;
+    protected final Text Score;
     protected final Label label0;
-    protected final TextField IpAddress;
     protected final Label label1;
-    protected final Button Enter;
-    protected final Label label2;
     protected final Button button;
     protected final Button backbtn;
+    protected final Button enter;
+    protected final Button ONSERVER;
     
-    protected final Label IP_not_exist;
-    protected final Pane pane;
-    
-    boolean retrieved = false;
 
-    public ListViewBase(Stage stage) {
+    Stage mystage;
+    FXMLDocumentController controller = new FXMLDocumentController();
+    ConnectToServer connect = new ConnectToServer();
 
-        IP_not_exist = new Label();
-        pane = new Pane();
+    public ListViewBase( Stage stage, String username) {
         
+        mystage =stage;
+
         ListView = new ListView();
         label = new Label();
         playername = new Text();
         Score = new Text();
         label0 = new Label();
-        IpAddress = new TextField();
         label1 = new Label();
-        Enter = new Button();
-        label2 = new Label();
         button = new Button();
         backbtn = new Button();
+        enter = new Button();
+        ONSERVER = new Button();
 
         setId("AnchorPane");
         setPrefHeight(555.0);
         setPrefWidth(597.0);
 
         ListView.setLayoutX(15.0);
-        ListView.setLayoutY(203.0);
-        ListView.setPrefHeight(314.0);
+        ListView.setLayoutY(147.0);
+        ListView.setPrefHeight(370.0);
         ListView.setPrefWidth(565.0);
 
         label.setLayoutX(15.0);
@@ -72,7 +75,7 @@ public  class ListViewBase extends AnchorPane {
         playername.setLayoutY(39.0);
         playername.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         playername.setStrokeWidth(0.0);
-        playername.setText("Text");
+        playername.setText(username);
         playername.setWrappingWidth(54.13671875);
         playername.setFont(new Font(15.0));
 
@@ -90,37 +93,15 @@ public  class ListViewBase extends AnchorPane {
         label0.setText("Score");
         label0.setFont(new Font("System Bold", 16.0));
 
-        IpAddress.setLayoutX(126.0);
-        IpAddress.setLayoutY(84.0);
-        IpAddress.setPrefHeight(25.0);
-        IpAddress.setPrefWidth(340.0);
-        IpAddress.setPromptText("Enter your IP Address");
-
-        label1.setLayoutX(14.0);
-        label1.setLayoutY(80.0);
-        label1.setPrefHeight(26.0);
-        label1.setPrefWidth(92.0);
-        label1.setText("IP  Address");
-        label1.setFont(new Font(17.0));
-
-        Enter.setLayoutX(517.0);
-        Enter.setLayoutY(80.0);
-        Enter.setMnemonicParsing(false);
-        Enter.setOnAction(this::enterIP);
-        Enter.setPrefHeight(25.0);
-        Enter.setPrefWidth(65.0);
-        Enter.setText("Enter");
-        Enter.setFont(new Font(13.0));
-
-        label2.setLayoutX(15.0);
-        label2.setLayoutY(158.0);
-        label2.setPrefHeight(30.0);
-        label2.setPrefWidth(174.0);
-        label2.setText("Select A player ");
-        label2.setFont(new Font("System Bold", 20.0));
+        label1.setLayoutX(15.0);
+        label1.setLayoutY(93.0);
+        label1.setPrefHeight(30.0);
+        label1.setPrefWidth(174.0);
+        label1.setText("Select A player ");
+        label1.setFont(new Font("System Bold", 20.0));
 
         button.setLayoutX(517.0);
-        button.setLayoutY(159.0);
+        button.setLayoutY(97.0);
         button.setMnemonicParsing(false);
         button.setOnAction(this::sendRequest);
         button.setText("Request");
@@ -134,101 +115,415 @@ public  class ListViewBase extends AnchorPane {
         backbtn.setPrefHeight(25.0);
         backbtn.setPrefWidth(65.0);
         backbtn.setText("HOME");
-        
-        GridPane.setRowIndex(pane, 3);
-        pane.setPrefHeight(200.0);
-        pane.setPrefWidth(200.0);
-        
-        IP_not_exist.setAlignment(javafx.geometry.Pos.CENTER);
-        IP_not_exist.setLayoutX(216.0);
-        IP_not_exist.setLayoutY(22.0);
-        IP_not_exist.setPrefHeight(27.0);
-        IP_not_exist.setPrefWidth(162.0);
-        IP_not_exist.setText("Wrong Password");
-        IP_not_exist.setTextFill(javafx.scene.paint.Color.RED);
-        IP_not_exist.setVisible(false);
-        IP_not_exist.setFont(new Font(18.0));
-     //  setTop(stage);
 
-        pane.getChildren().add(IP_not_exist);
-        getChildren().add(pane);
-
+        enter.setLayoutX(403.0);
+        enter.setLayoutY(97.0);
+        enter.setMnemonicParsing(false);
+        enter.setOnAction(this::getonline);
+        enter.setPrefHeight(29.0);
+        enter.setPrefWidth(105.0);
+        enter.setText("VIEW ONLINE");
+        
+        
+        ONSERVER.setLayoutX(260.0);
+        ONSERVER.setLayoutY(97.0);
+        ONSERVER.setMnemonicParsing(false);
+        ONSERVER.setOnAction(this::receving);
+        ONSERVER.setPrefHeight(29.0);
+        ONSERVER.setPrefWidth(105.0);
+        ONSERVER.setText("OPEN SERVER");
+        
+        
         getChildren().add(ListView);
         getChildren().add(label);
         getChildren().add(playername);
         getChildren().add(Score);
         getChildren().add(label0);
-        getChildren().add(IpAddress);
         getChildren().add(label1);
-        getChildren().add(Enter);
-        getChildren().add(label2);
         getChildren().add(button);
         getChildren().add(backbtn);
+        getChildren().add(enter);
+//        getChildren().add(ONSERVER);
 
+        Thread th = new Thread() {
+            public void run() {
+                Score.setText( connect.getplayerscore(playername.getText()));
+                System.out.println(connect.getplayerscore(playername.getText()));
+                 Platform.runLater(() -> {
+                    this.stop();
+                 });
+            }};
+          th.start();
+
+
+        
+        
     }
-      public static void nameList(User user){
-        playername.setText(user.getUsername());
-        Score.setText(String.valueOf(user.getScore()));
-       
-       };
 
-    protected void enterIP(javafx.event.ActionEvent actionEvent)
-    {
-        String ip = new String(IpAddress.getText());
-        if(ip != null){
-            
-            if(!retrieved){
-           
-            List<User> users = new ArrayList<>();
-
-            users.addAll(DAL.retrieveAll());
-            int usersNum = users.size();
-
-            System.out.println("clients retrieved: " + users.toString());
-
-            for(int i = 0; i < usersNum; i++){
-                ListView.getItems().add(users.get(i).getUsername() +  "\t \t" + "SCORE =" +users.get(i).getScore());
-                System.out.println("username: " + users.get(i).getUsername());
-            }
-
-            retrieved = true; }
-
-             else {
-                ListView.getItems().clear();
-                retrieved = false;
-            }
-        }
-        else {
-                  
-                  System.out.println("ENTER THE IP ADDRESS");
-                  IP_not_exist.setVisible(false);
-              }
-
-    };
-
-    protected  void sendRequest(javafx.event.ActionEvent actionEvent)
-    {
+    protected  void receving (javafx.event.ActionEvent actionEvent){
         
+        Thread th = new Thread() {
+
+               public void run() {
+                       
+                       
+                   try {
+                       
+                       
+                       //recieveing
+                       
+                       String result = connect.recieveonline();
+                       JSONObject obj = new JSONObject(result);
+                       System.out.println(result);
+                       
+                       try {
+                           JSONObject reqObj = new JSONObject();
+                           
+                           System.out.println(obj.getString("operation"));
+                           String operation = obj.getString("operation");
+                           switch(operation){
+                               case "you have invitaion":
+                                      System.out.println("the player will recieve");
+        //                           System.out.println(obj.getString("player"));
+                                    System.out.println("sender: " + obj.getString("sender") + " reciever " +  obj.getString("reciever"));
+
+                                    String sender = obj.getString("sender");
+                                    String reciever = obj.getString("reciever");
+                                    String turn = "";
+
+                                    Platform.runLater(()->{
+
+                                        this.stop();
+                                    //                                   controller.gotorequest(actionEvent);
+                                    Alert alert = new Alert(Alert.AlertType.NONE);
+                                    alert.setTitle("You have got a game request");
+                                    alert.setContentText("Do you want to accept the challenge from " + sender);
+                                    ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+                                    ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
+                                    alert.getButtonTypes().setAll(okButton, noButton);
+                                    alert.showAndWait().ifPresent(type -> {
+
+                                        if (type == okButton) {
+
+                                            try {
+
+
+                                                reqObj.put("operation", "challenge_accepted");
+
+                                                Alert alertxo = new Alert(Alert.AlertType.NONE);
+                                                alertxo.setTitle("Choose X or O");
+                                                alertxo.setContentText("Choose whether to play with X or O!");
+                                                ButtonType xBtn = new ButtonType("Play with X", ButtonBar.ButtonData.YES);
+                                                ButtonType oBtn = new ButtonType("Play With O", ButtonBar.ButtonData.YES);
+                                                alertxo.getButtonTypes().setAll(xBtn, oBtn);
+                                                alertxo.showAndWait().ifPresent(typexo -> {
+                                                    if (typexo == xBtn) {
+
+                                                        try {
+                                                            reqObj.put("turn", "O");
+                                                            Platform.runLater(()->{
+                                                            try {
+                                                                this.stop();
+                                                                controller.goToPlayOnline(actionEvent, sender, reciever, "X", true);
+
+                                                            } catch (IOException ex) {
+                                                                Logger.getLogger(LoginLayoutBase.class.getName()).log(Level.SEVERE, null, ex);
+                                                            }  
+                                                        });
+                                                        } catch (JSONException ex) {
+                                                            Logger.getLogger(ListViewBase.class.getName()).log(Level.SEVERE, null, ex);
+                                                        }
+
+                                                    } else if (typexo == oBtn) {
+                                                        try {
+                                                            reqObj.put("turn", "X");
+                                                            Platform.runLater(()->{
+                                                            try {
+                                                                this.stop();
+                                                                controller.goToPlayOnline(actionEvent, sender, reciever, "O", true);
+
+                                                            } catch (IOException ex) {
+                                                                Logger.getLogger(LoginLayoutBase.class.getName()).log(Level.SEVERE, null, ex);
+                                                            }   
+                                                        });
+
+                                                        } catch (JSONException ex) {
+                                                            Logger.getLogger(ListViewBase.class.getName()).log(Level.SEVERE, null, ex);
+                                                        }
+                                                    }
+                                                });
+
+                                            } catch (JSONException ex) {
+                                                Logger.getLogger(ListViewBase.class.getName()).log(Level.SEVERE, null, ex);
+                                            }
+                                        } else if (type == noButton) {
+
+                                            try {
+                                                reqObj.put("operation", "challenge_declined");
+                                            } catch (JSONException ex) {
+                                                Logger.getLogger(ListViewBase.class.getName()).log(Level.SEVERE, null, ex);
+                                            }
+                                        }
+                                        
+                                        try {
+                                            connect.replyInvitation(sender, reciever, reqObj.getString("turn"));
+                                            System.out.println("turn in fun replyInvitation: " + reqObj.getString("turn"));
+                                        } catch (JSONException ex) {
+                                            Logger.getLogger(ListViewBase.class.getName()).log(Level.SEVERE, null, ex);
+                                        }
+                                    });
+
+                                    });
+                                   
+                                   break;
+                                   
+                               case "you have invitaion reply":
+                                   
+                                   Platform.runLater(()->{
+                                        try {
+                                            this.stop();
+                                            System.out.println();
+                                            controller.goToPlayOnline(actionEvent, obj.getString("sender"),
+                                                    obj.getString("reciever"), obj.getString("turn"), false);
+
+                                        } catch (IOException ex) {
+                                            Logger.getLogger(LoginLayoutBase.class.getName()).log(Level.SEVERE, null, ex);
+                                        } catch (JSONException ex) { 
+                                   Logger.getLogger(ListViewBase.class.getName()).log(Level.SEVERE, null, ex);
+                               } 
+                                    });
+                                   
+                                   break;
+                           }
+
+                       } catch (JSONException ex) {
+                           Logger.getLogger(ListViewBase.class.getName()).log(Level.SEVERE, null, ex);
+                       }
+                   } catch (JSONException ex) {
+                       Logger.getLogger(ListViewBase.class.getName()).log(Level.SEVERE, null, ex);
+                   }
+               }};
         
-        User name = new User();
-        Object n = ListView.getSelectionModel().getSelectedItem();
-
-        //name.setUsername(n.toString());
-
-        System.out.println(ListView.getSelectionModel().getSelectedItem());
-
-    };
+            th.start();
 
     
-    protected  void BackAction(javafx.event.ActionEvent actionEvent) 
-            
-    { 
-        try {
-            FXMLDocumentController controller=new FXMLDocumentController();
+    };
+    protected  void sendRequest(javafx.event.ActionEvent actionEvent) {
+        
+        System.out.println(ListView.getSelectionModel().getSelectedItem());
+        
+        //send
+        connect.sendInvitaionto(playername.getText(), ListView.getSelectionModel().getSelectedItem().toString());
+        
+        
+
+//        System.out.println("sending");
+    };
+
+    protected  void BackAction(javafx.event.ActionEvent actionEvent) {
+    try {
             controller.goToGameMode(actionEvent);
         } catch (IOException ex) {
             Logger.getLogger(ListViewBase.class.getName()).log(Level.SEVERE, null, ex);
         }
-            };
+    };
+       
+    protected  void getonline(javafx.event.ActionEvent actionEvent) {
+        
+        //send
+        connect.loadonline();
 
+        Thread th = new Thread() {
+
+            public void run() {
+                try {
+                    
+                    String data = connect.recieveonline(); //data JSONObject of (operation and JSONObject ((playerdata , online)))
+                    
+                    
+                    JSONObject onlinedata = new JSONObject(data);
+                    
+                    JSONArray onlinelist= onlinedata.getJSONArray("online");
+                    
+                    Platform.runLater(()->{
+//                            this.stop();
+                            ListView.getItems().clear();
+                            for (int i=0 ; i < onlinelist.length() ;i++ )
+                            {
+
+                                try {
+                                    ListView.getItems().add(onlinelist.get(i));
+                                } catch (JSONException ex) {
+                                    Logger.getLogger(ListViewBase.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+
+                            }
+                        try {
+                            ListView.getItems().remove(onlinedata.getString("player data").toString());
+                        } catch (JSONException ex) {
+                            Logger.getLogger(ListViewBase.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+  
+                    });
+//                    ListView.getItems().clear();
+//                    for (int i=0 ; i < onlinelist.length() ;i++ )
+//                    {
+//                      
+//                        ListView.getItems().add(onlinelist.get(i));
+//
+//                    }
+                    
+                    
+                    
+                    try {
+                       
+                       
+                       //recieveing
+                       
+                       String result = connect.recieveonline();
+                       JSONObject obj = new JSONObject(result);
+                       System.out.println(result);
+                       
+                       try {
+                           JSONObject reqObj = new JSONObject();
+                           
+                           System.out.println(obj.getString("operation"));
+                           String operation = obj.getString("operation");
+                           switch(operation){
+                               case "you have invitaion":
+                                      System.out.println("the player will recieve");
+        //                           System.out.println(obj.getString("player"));
+                                    System.out.println("sender: " + obj.getString("sender") + " reciever " +  obj.getString("reciever"));
+
+                                    String sender = obj.getString("sender");
+                                    String reciever = obj.getString("reciever");
+                                    String turn = "";
+
+                                    Platform.runLater(()->{
+
+                                        this.stop();
+                                    //                                   controller.gotorequest(actionEvent);
+                                    Alert alert = new Alert(Alert.AlertType.NONE);
+                                    alert.setTitle("You have got a game request");
+                                    alert.setContentText("Do you want to accept the challenge from " + sender);
+                                    ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+                                    ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
+                                    alert.getButtonTypes().setAll(okButton, noButton);
+                                    alert.showAndWait().ifPresent(type -> {
+
+                                        if (type == okButton) {
+
+                                            try {
+
+
+                                                reqObj.put("operation", "challenge_accepted");
+
+                                                Alert alertxo = new Alert(Alert.AlertType.NONE);
+                                                alertxo.setTitle("Choose X or O");
+                                                alertxo.setContentText("Choose whether to play with X or O!");
+                                                ButtonType xBtn = new ButtonType("Play with X", ButtonBar.ButtonData.YES);
+                                                ButtonType oBtn = new ButtonType("Play With O", ButtonBar.ButtonData.YES);
+                                                alertxo.getButtonTypes().setAll(xBtn, oBtn);
+                                                alertxo.showAndWait().ifPresent(typexo -> {
+                                                    if (typexo == xBtn) {
+
+                                                        try {
+                                                            reqObj.put("turn", "O");
+                                                            Platform.runLater(()->{
+                                                            try {
+                                                                this.stop();
+                                                                controller.goToPlayOnline(actionEvent, sender, reciever, "X", true);
+
+                                                            } catch (IOException ex) {
+                                                                Logger.getLogger(LoginLayoutBase.class.getName()).log(Level.SEVERE, null, ex);
+                                                            }  
+                                                        });
+                                                        } catch (JSONException ex) {
+                                                            Logger.getLogger(ListViewBase.class.getName()).log(Level.SEVERE, null, ex);
+                                                        }
+
+                                                    } else if (typexo == oBtn) {
+                                                        try {
+                                                            reqObj.put("turn", "X");
+                                                            Platform.runLater(()->{
+                                                            try {
+                                                                this.stop();
+                                                                controller.goToPlayOnline(actionEvent, sender, reciever, "O", true);
+
+                                                            } catch (IOException ex) {
+                                                                Logger.getLogger(LoginLayoutBase.class.getName()).log(Level.SEVERE, null, ex);
+                                                            }   
+                                                        });
+
+                                                        } catch (JSONException ex) {
+                                                            Logger.getLogger(ListViewBase.class.getName()).log(Level.SEVERE, null, ex);
+                                                        }
+                                                    }
+                                                });
+
+                                            } catch (JSONException ex) {
+                                                Logger.getLogger(ListViewBase.class.getName()).log(Level.SEVERE, null, ex);
+                                            }
+                                        } else if (type == noButton) {
+
+                                            try {
+                                                reqObj.put("operation", "challenge_declined");
+                                            } catch (JSONException ex) {
+                                                Logger.getLogger(ListViewBase.class.getName()).log(Level.SEVERE, null, ex);
+                                            }
+                                        }
+                                        
+                                        try {
+                                            connect.replyInvitation(sender, reciever, reqObj.getString("turn"));
+                                            System.out.println("turn in fun replyInvitation: " + reqObj.getString("turn"));
+                                        } catch (JSONException ex) {
+                                            Logger.getLogger(ListViewBase.class.getName()).log(Level.SEVERE, null, ex);
+                                        }
+                                    });
+
+                                    });
+                                   
+                                   break;
+                                   
+                               case "you have invitaion reply":
+                                   
+                                   Platform.runLater(()->{
+                                        try {
+                                            this.stop();
+                                            System.out.println();
+                                            controller.goToPlayOnline(actionEvent, obj.getString("sender"),
+                                                    obj.getString("reciever"), obj.getString("turn"), false);
+
+                                        } catch (IOException ex) {
+                                            Logger.getLogger(LoginLayoutBase.class.getName()).log(Level.SEVERE, null, ex);
+                                        } catch (JSONException ex) { 
+                                   Logger.getLogger(ListViewBase.class.getName()).log(Level.SEVERE, null, ex);
+                               } 
+                                    });
+                                   
+                                   break;
+                           }
+
+                       } catch (JSONException ex) {
+                           Logger.getLogger(ListViewBase.class.getName()).log(Level.SEVERE, null, ex);
+                       }
+                   } catch (JSONException ex) {
+                       Logger.getLogger(ListViewBase.class.getName()).log(Level.SEVERE, null, ex);
+                   }
+                    
+                    
+                    
+
+                        this.stop();
+//                        System.out.println("online deleveried");
+                }
+                 catch (JSONException ex) {
+                    Logger.getLogger(ListViewBase.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        };
+        th.start();
+    
+    };
 }

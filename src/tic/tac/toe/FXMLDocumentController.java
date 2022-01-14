@@ -27,8 +27,8 @@ public class FXMLDocumentController {
         stage.show();
     }
     
-    public void goToListView(ActionEvent event) throws IOException{
-        root = new ListViewBase(stage); // add video screen
+    public void goToListView(ActionEvent event, String username) throws IOException{
+        root = new ListViewBase(stage, username); // add video screen
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
@@ -38,7 +38,7 @@ public class FXMLDocumentController {
     
     public void goToLogin(ActionEvent event) throws IOException {
 
-        root = new LoginBase(stage);
+        root = new LoginLayoutBase(stage);
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
@@ -48,13 +48,34 @@ public class FXMLDocumentController {
 
     public void goToRegister(ActionEvent event) throws IOException {
 
-        root = new RegisterBase(stage);
+        root = new RegisterLayoutBase(stage);
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
     
+    
+     public void gotorequest(ActionEvent event) throws IOException {
+
+        root = new requestBase(stage);
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    
+     
+    public void gotogame(ActionEvent event) throws IOException {
+
+        root = new requestBase(stage);
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+     
+     
     public void goToGameMode(ActionEvent event) throws IOException {
 
         root = new GameModeBase(stage);
@@ -63,7 +84,7 @@ public class FXMLDocumentController {
         stage.setScene(scene);
         stage.show();
     }  
-        
+    /*
     public void goToUsersList(ActionEvent event) throws IOException {
         root = new ListViewBase(stage);
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -71,9 +92,24 @@ public class FXMLDocumentController {
         stage.setScene(scene);
         stage.show();
     }
-    
+    */
     public void goToPlayWithFriend(ActionEvent event) throws IOException {
         root = new PlayWithFriend(stage);
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+     public void goToPlayOnline(ActionEvent event, String sender, String reciever, String turn, boolean flag) throws IOException {
+        root = new GameOnlineBase(stage, sender, reciever, turn, flag);
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    void gotoip(ActionEvent event) throws IOException {
+        root = new IPADDBase(stage);
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
