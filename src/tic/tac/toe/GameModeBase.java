@@ -167,13 +167,13 @@ public class GameModeBase extends BorderPane {
     */
 
     protected void playVsComputer(javafx.event.ActionEvent actionEvent) {
-        /*]
+        
         try {
-            controller.goToPlayWithFriend(actionEvent);
+            controller.goToVsComputer(actionEvent);
         } catch (IOException ex) {
             Logger.getLogger(GameModeBase.class.getName()).log(Level.SEVERE, null, ex);
         }
-        */
+        
     }
 
     protected void playOnline(javafx.event.ActionEvent actionEvent) {

@@ -93,6 +93,15 @@ public class FXMLDocumentController {
         stage.show();
     }
     */
+    
+    public void goToVsComputer(ActionEvent event) throws IOException {
+        root = new PlayVsComputer(stage);
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    
     public void goToPlayWithFriend(ActionEvent event) throws IOException {
         root = new PlayWithFriend(stage);
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
