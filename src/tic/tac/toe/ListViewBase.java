@@ -154,10 +154,6 @@ public class ListViewBase extends AnchorPane {
                  });
             }};
           th.start();
-
-
-        
-        
     }
 
     protected  void receving (javafx.event.ActionEvent actionEvent){
@@ -343,7 +339,7 @@ public class ListViewBase extends AnchorPane {
                     
                     JSONObject onlinedata = new JSONObject(data);
                     
-                    JSONArray onlinelist= onlinedata.getJSONArray("online");
+                    JSONArray onlinelist= onlinedata.getJSONArray("online");    
                     
                     Platform.runLater(()->{
 //                            this.stop();
