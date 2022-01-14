@@ -37,14 +37,15 @@ public class GameOnlineBase extends AnchorPane {
     private boolean playerTurn = true;
     private boolean gameOver = false;
     ArrayList<Label> labels;
-    
+    ConnectToServer connect = new ConnectToServer();
+    String inSender, inReciever, inTurn, username, sender, reciever;
     
     
 //    private Socket server;
 //    DataInputStream dis;
 //    PrintStream ps;
     
-    public GameOnlineBase(Stage stage, String turn) {
+    public GameOnlineBase(Stage stage, String player1, String player2, String turn, boolean flag) {
 
         
         anchorPane = new AnchorPane();
@@ -179,11 +180,29 @@ public class GameOnlineBase extends AnchorPane {
         getChildren().add(anchorPane);
 
         
-        if(turn.equals("x")){
+        if(turn.equals("X")){
             playerTurn = true;
+            System.out.println("you are player X");
         } else {
             playerTurn = false;
+            System.out.println("turn: " + "you are player O");
         }
+        
+        inTurn = turn;
+        if(flag){
+            username = player2;
+            sender = player2;
+            reciever = player1;
+        } else {
+            username = player1;
+            sender = player1;
+            reciever = player2;
+            
+        }
+//        System.out.println("sender: " + inSender + " recicever: " + inReciever + " turn: " + inTurn);
+        System.out.println("user is: " + username);
+        System.out.println("sender is: " + sender);
+        System.out.println("reciever is: " + reciever);
         
 //        try {
         
@@ -195,33 +214,35 @@ public class GameOnlineBase extends AnchorPane {
 //        ps.println("Turn X");
 
 
-        
+
 
         new Thread(){
-
+        
             @Override
-            public void run() {
+            public void run(){
                 while(true){
                     
+                    JSONObject obj = connect.moveRecieved();
+                    System.out.println("recieved: " + obj);
+                    
                     try {
-
-//                        if(dis.readLine() != null){
-//                            String msg = dis.readLine();
-//                            System.out.println("client: " + msg);
-//                            JSONObject obj = new JSONObject(msg);
-                            System.out.println("client: " + "dummy");
-                            JSONObject obj = new JSONObject("dummy");
-                            System.out.println(obj.getString("turn"));
-                            System.out.println(obj.getString("square"));
-
-                            String turn = obj.getString("turn");
-                            String square = obj.getString("square");
-                            String sender = obj.getString("sender");
-                            String reciever = obj.getString("reciever");
+                        
+                        
+                        String turn = obj.getString("turn");
+                        String square = obj.getString("square");
+                        String sender = obj.getString("sender");
+                        String reciever = obj.getString("reciever");
+//                        gameOver = obj.getBoolean("isOver");
+                        
+                        if(turn.equals("X")){
+                            turnX = false;
                             
-                            
-
-                            switch(square){
+                        } else {
+                            turnX = true;
+                        }
+                        
+                        
+                        switch(square){
                                 case "label1":
                                     Platform.runLater(new Runnable(){
                                     @Override
@@ -327,24 +348,25 @@ public class GameOnlineBase extends AnchorPane {
                                     
                                     break;
                             
-                                
-                            
                             }
+                        
                             playerTurn = true;
-//                        }
+                            checkGameIsOver();
+                        
                         
                     } catch (JSONException ex) {
                         Logger.getLogger(GameOnlineBase.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     
+                    
+                    
+                    
                 }
             }
-
+            
         }.start();
-
-//        }
         
-//        setLabelWithSymbol(label1, "X");
+
 
     }
     
@@ -367,6 +389,7 @@ public class GameOnlineBase extends AnchorPane {
         label.setOnMouseClicked( mouseEvent ->{
             
             if(!gameOver && playerTurn){
+//            if(!gameOver){
                 
                 try {
 //                    server = new Socket("127.0.0.1", 5005);
@@ -380,11 +403,20 @@ public class GameOnlineBase extends AnchorPane {
 
                     String turn = "";
                     if(!turnX){ turn = "X"; } else { turn = "O"; }
-//                    obj.put("turn", turn);
-//                    obj.put("square", label.getId());
+                    obj.put("turn", turn);
+                    obj.put("square", label.getId());
+                    
+//                    String sender = "";
+//                    String reciever = "";
+                    
+                    
+                    //send
+//                    connect.sendMove(sender, reciever, turn, label.getId(), gameOver);
+                    connect.sendMove(sender, reciever, turn, label.getId());
+                    playerTurn = false;
 
-                    obj.put("username", "Nour");
-                    obj.put("password", "1234");
+//                    obj.put("username", "Nour");
+//                    obj.put("password", "1234");
 
 
 //                    ps.println(obj.toString());
@@ -412,6 +444,8 @@ public class GameOnlineBase extends AnchorPane {
                   
                   obj.put("turn", "X");
                   obj.put("square", label.getId());
+//                    connect.sendMove(sender, reciever, "X", label.getId(), gameOver);
+                    connect.sendMove(sender, reciever, "X", label.getId());
 //                  turnX = false;
                   
 //                  ps.println(obj.toString());
@@ -431,6 +465,8 @@ public class GameOnlineBase extends AnchorPane {
 //                  ps.println("Turn O");
                   obj.put("turn", "O");
                   obj.put("square", label.getId());
+//                    connect.sendMove(sender, reciever, "O", label.getId(), gameOver);
+                    connect.sendMove(sender, reciever, "O", label.getId());
 //                  turnX = true;
                   
 //                  ps.println(obj.toString());
