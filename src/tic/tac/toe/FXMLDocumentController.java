@@ -66,24 +66,6 @@ public class FXMLDocumentController {
     }
     
     
-//     public void gotorequest(ActionEvent event) throws IOException {
-//
-//        root = new requestBase(stage);
-//        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//        scene = new Scene(root);
-//        stage.setScene(scene);
-//        stage.show();
-//    }
-    
-     
-//    public void gotogame(ActionEvent event) throws IOException {
-//
-//        root = new requestBase(stage);
-//        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//        scene = new Scene(root);
-//        stage.setScene(scene);
-//        stage.show();
-//    }
      
      
     public void goToGameMode(ActionEvent event) throws IOException {
@@ -95,23 +77,7 @@ public class FXMLDocumentController {
         stage.show();
     }  
     
-    public void goToGameMode1(MouseEvent event) throws IOException {
 
-        root = new GameModeBase(stage);
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }  
-    /*
-    public void goToUsersList(ActionEvent event) throws IOException {
-        root = new ListViewBase(stage);
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-    */
     
     public void goToVsComputer(ActionEvent event) throws IOException {
         root = new PlayVsComputer(stage);

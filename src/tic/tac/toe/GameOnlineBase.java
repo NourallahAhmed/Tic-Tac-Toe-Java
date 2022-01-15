@@ -264,6 +264,8 @@ public class GameOnlineBase extends AnchorPane {
         anchorPane.getChildren().add(line3);
         anchorPane.getChildren().add(gameInfo);
         anchorPane.getChildren().add(btn_back);
+        anchorPane.getChildren().add(record);
+        anchorPane.getChildren().add(load);
         getChildren().add(anchorPane);
         getChildren().add(line4);
         
@@ -438,7 +440,8 @@ public class GameOnlineBase extends AnchorPane {
                                     @Override
                                     public void run() {
                                         label1.setText(turn);
-                                       r.SaveMoves("label1", turn);
+                                        r.SaveMoves("label1", turn);
+                                        gameOver = checkGameIsOver(null);
 
                                         label1.setDisable(true);
                                     }
@@ -454,7 +457,7 @@ public class GameOnlineBase extends AnchorPane {
                                         label2.setText(turn);
                                         label2.setDisable(true);
                                         r.SaveMoves("label2", turn);
-
+                                        gameOver = checkGameIsOver(null);
                                     }
 
                                     });
@@ -467,7 +470,7 @@ public class GameOnlineBase extends AnchorPane {
                                         label3.setText(turn);
                                         label3.setDisable(true);
                                          r.SaveMoves("label3", turn);
-
+                                         gameOver = checkGameIsOver(null);
                                     }
 
                                     });
@@ -481,6 +484,7 @@ public class GameOnlineBase extends AnchorPane {
                                         label4.setDisable(true);
                                         r.SaveMoves("label4", turn);
 
+                                        gameOver = checkGameIsOver(null);
                                     }
 
                                     });
@@ -493,6 +497,7 @@ public class GameOnlineBase extends AnchorPane {
                                         label5.setText(turn);
                                         label5.setDisable(true);
                                         r.SaveMoves("label5", turn);
+                                        gameOver = checkGameIsOver(null);
                                     }
 
                                     });
@@ -505,6 +510,7 @@ public class GameOnlineBase extends AnchorPane {
                                         label6.setText(turn);
                                         label6.setDisable(true);
                                         r.SaveMoves("label6", turn);
+                                        gameOver = checkGameIsOver(null);
                                     }
 
                                     });
@@ -517,6 +523,7 @@ public class GameOnlineBase extends AnchorPane {
                                         label7.setText(turn);
                                         label7.setDisable(true);
                                         r.SaveMoves("label7", turn);
+                                        gameOver = checkGameIsOver(null);
                                     }
 
                                     });
@@ -529,6 +536,7 @@ public class GameOnlineBase extends AnchorPane {
                                         label8.setText(turn);
                                         label8.setDisable(true);
                                         r.SaveMoves("label8", turn);
+                                        gameOver = checkGameIsOver(null);
                                     }
 
                                     });
@@ -541,6 +549,7 @@ public class GameOnlineBase extends AnchorPane {
                                         label9.setText(turn);
                                         label9.setDisable(true);
                                         r.SaveMoves("label9", turn);
+                                        gameOver = checkGameIsOver(null);
                                     }
 
                                     });
@@ -714,7 +723,7 @@ public class GameOnlineBase extends AnchorPane {
 
     protected void backToOnline(javafx.event.ActionEvent actionEvent) {
         try {
-            controller.goToListView(actionEvent, username);
+            controller.goToGameMode(actionEvent);
         
         } catch (IOException ex) {
             Logger.getLogger(GameModeBase.class.getName()).log(Level.SEVERE, null, ex);

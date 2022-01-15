@@ -66,7 +66,7 @@ public class FXMLVideoScreenBase extends AnchorPane {
     protected void backToOnline(javafx.event.ActionEvent actionEvent){
     
          try {
-            controller.goToListView(actionEvent, username);
+            controller.goToGameMode(actionEvent);
         
         } catch (IOException ex) {
             Logger.getLogger(GameModeBase.class.getName()).log(Level.SEVERE, null, ex);
