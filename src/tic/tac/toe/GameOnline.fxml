@@ -1,28 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <AnchorPane layoutX="-18.0" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="400.0" prefWidth="612.0">
+      <AnchorPane layoutX="-18.0" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="700.0" prefWidth="612.0">
          <children>
-            <Line fx:id="HLine1" endX="135.0" layoutX="295.0" layoutY="75.0" startX="-138.0" />
-            <Line fx:id="VLine2" endX="52.0" endY="48.0" layoutX="290.0" layoutY="149.0" startX="52.0" startY="-123.0" />
-            <Line fx:id="HLine2" endX="130.0" layoutX="301.0" layoutY="137.0" startX="-143.0" />
-            <Line fx:id="VLine1" endX="-17.0" endY="79.0" layoutX="266.0" layoutY="118.0" startX="-17.0" startY="-91.0" />
-            <Label fx:id="label6" layoutX="345.0" layoutY="79.0" prefHeight="53.0" prefWidth="86.0" />
-            <Label fx:id="label1" layoutX="158.0" layoutY="27.0" prefHeight="40.0" prefWidth="81.0" />
-            <Label fx:id="label2" layoutX="258.0" layoutY="22.0" prefHeight="44.0" prefWidth="74.0" />
-            <Label fx:id="label3" layoutX="352.0" layoutY="32.0" prefHeight="37.0" prefWidth="73.0" />
-            <Label fx:id="label4" layoutX="157.0" layoutY="82.0" prefHeight="48.0" prefWidth="82.0" />
-            <Label fx:id="label5" layoutX="255.0" layoutY="77.0" prefHeight="54.0" prefWidth="79.0" />
-            <Label fx:id="label7" layoutX="158.0" layoutY="142.0" prefHeight="45.0" prefWidth="84.0" />
-            <Label fx:id="label8" layoutX="256.0" layoutY="141.0" prefHeight="49.0" prefWidth="77.0" />
-            <Label fx:id="label9" layoutX="347.0" layoutY="144.0" prefHeight="45.0" prefWidth="80.0" />
+            <Line fx:id="HLine1" endX="121.0" layoutX="428.0" layoutY="55.0" startX="-334.0" />
+            <Line fx:id="VLine2" endX="52.0" endY="334.0" layoutX="347.0" layoutY="178.0" startX="52.0" startY="-123.0" />
+            <Line fx:id="HLine2" endX="277.0" endY="-2.0" layoutX="272.0" layoutY="207.0" startX="-178.0" />
+            <Line fx:id="VLine1" endX="-17.0" endY="364.0" layoutX="262.0" layoutY="148.0" startX="-17.0" startY="-91.0" />
+            <Label fx:id="label6" alignment="CENTER" layoutX="399.0" layoutY="205.0" prefHeight="156.0" prefWidth="150.0">
+               <font>
+                  <Font size="64.0" />
+               </font></Label>
+            <Label fx:id="label1" alignment="CENTER" layoutX="93.0" layoutY="56.0" prefHeight="150.0" prefWidth="150.0" textAlignment="CENTER">
+               <font>
+                  <Font size="64.0" />
+               </font></Label>
+            <Label fx:id="label2" alignment="CENTER" contentDisplay="CENTER" layoutX="246.0" layoutY="57.0" prefHeight="150.0" prefWidth="150.0" textAlignment="CENTER">
+               <font>
+                  <Font size="64.0" />
+               </font></Label>
+            <Label fx:id="label3" alignment="CENTER" layoutX="399.0" layoutY="55.0" prefHeight="150.0" prefWidth="150.0">
+               <font>
+                  <Font size="64.0" />
+               </font></Label>
+            <Label fx:id="label4" alignment="CENTER" layoutX="93.0" layoutY="208.0" prefHeight="150.0" prefWidth="150.0">
+               <font>
+                  <Font size="64.0" />
+               </font></Label>
+            <Label fx:id="label5" alignment="CENTER" contentDisplay="CENTER" layoutX="245.0" layoutY="208.0" prefHeight="150.0" prefWidth="155.0" textAlignment="CENTER">
+               <font>
+                  <Font size="64.0" />
+               </font></Label>
+            <Label fx:id="label7" alignment="CENTER" layoutX="92.0" layoutY="361.0" prefHeight="150.0" prefWidth="150.0">
+               <font>
+                  <Font size="64.0" />
+               </font></Label>
+            <Label fx:id="label8" alignment="CENTER" layoutX="246.0" layoutY="361.0" prefHeight="150.0" prefWidth="150.0">
+               <font>
+                  <Font size="64.0" />
+               </font></Label>
+            <Label fx:id="label9" alignment="CENTER" layoutX="399.0" layoutY="358.0" prefHeight="150.0" prefWidth="150.0">
+               <font>
+                  <Font size="64.0" />
+               </font></Label>
+            <Line fx:id="line1" endX="100.0" layoutX="449.0" layoutY="57.0" startX="100.0" startY="455.20709228515625" />
+            <Line fx:id="line2" endX="93.0" endY="56.0" startX="92.0" startY="511.0" />
+            <Line fx:id="line3" endX="92.2928466796875" endY="363.0" layoutY="-4.0" startX="549.5" startY="363.0" />
+            <Text fx:id="gameInfo" layoutX="223.0" layoutY="560.0" strokeType="OUTSIDE" strokeWidth="0.0">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <Button fx:id="btn_back" layoutX="263.0" layoutY="628.0" mnemonicParsing="false" onAction="#backToOnline" text="Back To Online" />
          </children>
       </AnchorPane>
+      <Line fx:id="line4" endX="530.5" endY="508.70709228515625" layoutY="4.0" startX="74.5" startY="507.70709228515625" />
    </children>
 </AnchorPane>

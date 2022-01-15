@@ -45,6 +45,7 @@ public class LoginLayoutBase extends AnchorPane {
 
 
     FXMLDocumentController controller = new FXMLDocumentController();
+            ConnectToServer connect= new ConnectToServer(); 
 
     public LoginLayoutBase(Stage stage) {
         label = new Label();
@@ -195,44 +196,59 @@ public class LoginLayoutBase extends AnchorPane {
     }   
 
    
-    
-
     protected void loginAction(javafx.event.ActionEvent actionEvent)  {  
         try {
+            System.out.println("here");
+//            if(!usernamelog.getText().equals("") && !passwordlog.getText().equals("")){
             
             JSONObject obj = new JSONObject();
             obj.put("operation", "login");
             obj.put("username", usernamelog.getText());
             obj.put("password", passwordlog.getText());  
-            //obj.put("ip", ipLogin.getText());  
-            ConnectToServer connect= new ConnectToServer(); 
+
+//OBJ object carry the data --> username and password <-- will return the score --> the score and player name will be static 
+//to be easy to updata from here 
             connect.logindata(obj.toString());
+//            }
+            
             
             //System.out.println("login"+connect.recieved());
             
             Thread th = new Thread (){
                 public void run() {
+                    
                     String result = connect.recieved();
                     System.out.println(result);
                     if (result.equals("gotolist")) {
-                        System.out.println("iam exist");
+                        //System.out.println("iam exist");
                        
                             Platform.runLater(()->{
                                 try {
                                     this.stop();
                                     controller.goToListView(actionEvent, usernamelog.getText());
-
+                                    
+                                    
                                 } catch (IOException ex) {
                                     Logger.getLogger(LoginLayoutBase.class.getName()).log(Level.SEVERE, null, ex);
                                 } 
                             });
                         } 
-                     else {
-                        System.out.println("user doesn't exists");
-                        wrongPass.setVisible(false);
-                        usernameNotFound.setVisible(true);
+                        
+                        if(result.equals("password is wrong"))
+                        {
+                            System.out.println("Wrong password");
+                            usernameNotFound.setVisible(false);
+                            wrongPass.setVisible(true);
+                        }
+         
+                        if(result.equals("User Not Exist"))
+                        {
+                           //System.out.println("user doesn't exists");
+                           wrongPass.setVisible(false);
+                           usernameNotFound.setVisible(true);
+                        }
+                        
                     }
-                }
             };
            th.start();
                      
@@ -240,6 +256,52 @@ public class LoginLayoutBase extends AnchorPane {
             Logger.getLogger(LoginLayoutBase.class.getName()).log(Level.SEVERE, null, ex);} 
       
     }
+    
+    
+
+//    protected void loginAction(javafx.event.ActionEvent actionEvent)  {  
+//        try {
+//            
+//            JSONObject obj = new JSONObject();
+//            obj.put("operation", "login");
+//            obj.put("username", usernamelog.getText());
+//            obj.put("password", passwordlog.getText());  
+//            //obj.put("ip", ipLogin.getText());  
+//            ConnectToServer connect= new ConnectToServer(); 
+//            connect.logindata(obj.toString());
+//            
+//            //System.out.println("login"+connect.recieved());
+//            
+//            Thread th = new Thread (){
+//                public void run() {
+//                    String result = connect.recieved();
+//                    System.out.println(result);
+//                    if (result.equals("gotolist")) {
+//                        System.out.println("iam exist");
+//                       
+//                            Platform.runLater(()->{
+//                                try {
+//                                    this.stop();
+//                                    controller.goToListView(actionEvent, usernamelog.getText());
+//
+//                                } catch (IOException ex) {
+//                                    Logger.getLogger(LoginLayoutBase.class.getName()).log(Level.SEVERE, null, ex);
+//                                } 
+//                            });
+//                        } 
+//                     else {
+//                        System.out.println("user doesn't exists");
+//                        wrongPass.setVisible(false);
+//                        usernameNotFound.setVisible(true);
+//                    }
+//                }
+//            };
+//           th.start();
+//                     
+//        } catch (JSONException ex) {
+//            Logger.getLogger(LoginLayoutBase.class.getName()).log(Level.SEVERE, null, ex);} 
+//      
+//    }
         
    
         
