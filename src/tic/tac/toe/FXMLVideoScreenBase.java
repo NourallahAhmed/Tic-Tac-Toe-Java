@@ -40,7 +40,7 @@ public class FXMLVideoScreenBase extends AnchorPane {
         btn_back.setLayoutY(550.0);
         btn_back.setMnemonicParsing(false);
         btn_back.setOnAction(this::backToOnline);
-        btn_back.setText("Back To Online");
+        btn_back.setText("Back To GAME MODES");
 
         // getting video ready to play
         Media media = new Media(getClass().getResource("video.mp4").toExternalForm());
@@ -66,7 +66,7 @@ public class FXMLVideoScreenBase extends AnchorPane {
     protected void backToOnline(javafx.event.ActionEvent actionEvent){
     
          try {
-            controller.goToListView(actionEvent, username);
+                   controller.goToGameMode(actionEvent);
         
         } catch (IOException ex) {
             Logger.getLogger(GameModeBase.class.getName()).log(Level.SEVERE, null, ex);
