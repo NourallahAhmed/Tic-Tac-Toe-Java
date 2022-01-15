@@ -205,7 +205,7 @@ public class GameOnlineBase extends AnchorPane {
 
         labels.forEach(label->
         {
-            setUpLabels(label);
+            printPlayerMove(label);
             label.setFocusTraversable(false);
         }
         );
@@ -566,13 +566,13 @@ public class GameOnlineBase extends AnchorPane {
 
     }
 
-    private void setUpLabels(Label label){
+    private void printPlayerMove(Label label){
         
         label.setOnMouseClicked( mouseEvent ->{
             
             if(!gameOver && playerTurn){
                 
-                boolean turnX = setPlayerSymbol(label);
+                boolean turnX = setPlayerTurn(label);
                 label.setDisable(true);
 
                 String turn = "";
@@ -591,7 +591,7 @@ public class GameOnlineBase extends AnchorPane {
         });
     }
       
-    public boolean setPlayerSymbol (Label label){
+    public boolean setPlayerTurn (Label label){
         if (turnX == true){
 
             label.setText("X");
